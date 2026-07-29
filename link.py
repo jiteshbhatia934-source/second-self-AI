@@ -119,6 +119,25 @@ def cosine_sim(a: np.ndarray, b: np.ndarray) -> float:
     return float(np.dot(a, b) / denom)
 
 
+def update_front_matter_embedding_version(path: Path, model_name: str) -> bool:
+    """Ensure embedding_version is recorded in markdown front matter."""
+    try:
+        text = path.read_text(encoding="utf-8")
+        m = FRONT_MATTER_RE.match(text)
+        if not m:
+            return False
+        fm = m.group(1)
+        body = m.group(2)
+        if "embedding_version:" in fm:
+            return False
+        new_fm = fm.rstrip() + f"\nembedding_version: '{model_name}'\n"
+        new_text = f"---\n{new_fm}---\n{body}"
+        path.write_text(new_text, encoding="utf-8")
+        return True
+    except Exception:
+        return False
+
+
 def main():
     config.ensure_project_dirs()
     wiki_dir = config.WIKI_DIR
@@ -138,6 +157,11 @@ def main():
 
     # Build or update embeddings
     emb_store = build_note_embeddings(notes)
+
+    # Record embedding_version in front matter
+    model_name = emb_store.get("model") or config.EMBEDDING_MODEL
+    for _, _, p in notes:
+        update_front_matter_embedding_version(p, model_name)
 
     # collect vectors in same order
     slugs = [s for s, _, _ in notes]
@@ -185,3 +209,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

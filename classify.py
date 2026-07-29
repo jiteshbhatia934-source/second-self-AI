@@ -196,7 +196,79 @@ def write_wiki(note: dict, para: str, wiki_dir: Path):
     return candidate
 
 
+def classify_with_groq(record: dict) -> dict | None:
+    if not config.groq_configured():
+        return None
+    try:
+        import groq
+        client = groq.Groq(api_key=config.GROQ_API_KEY)
+        content = (record.get("content") or record.get("text") or "").strip()
+        source_type = record.get("source_type", "note")
+        metadata = record.get("metadata", {})
+
+        prompt = f"""You are SecondSelf Sorting Hat, an AI classifier for personal notes.
+Analyze this raw capture (Type: {source_type}):
+Content: {content}
+Metadata: {json.dumps(metadata)}
+
+Categorize it using the PARA framework:
+- Projects: Time-bound goals or projects with specific outcomes and deadlines.
+- Areas: Ongoing responsibilities, standards, or roles to maintain over time without a deadline.
+- Resources: Reference material, topics of ongoing interest, guides, bookmarks, or summaries.
+- Archives: Inactive, old, or completed items.
+
+Return ONLY a valid JSON object matching this structure:
+{{
+  "title": "descriptive, concise title",
+  "para": "Projects" | "Areas" | "Resources" | "Archives",
+  "tags": ["2-5 lowercase relevant tags"],
+  "summary": "1-2 sentence concise summary",
+  "body": "cleaned up markdown representation of content"
+}}"""
+
+        for attempt in range(2):
+            try:
+                response = client.chat.completions.create(
+                    model="llama-3.3-70b-versatile",
+                    messages=[
+                        {"role": "system", "content": "You output strictly valid JSON."},
+                        {"role": "user", "content": prompt},
+                    ],
+                    temperature=0.1,
+                    response_format={"type": "json_object"},
+                )
+                raw_json = response.choices[0].message.content
+                data = json.loads(raw_json)
+                para = data.get("para", "").capitalize()
+                if para not in config.PARA_FOLDERS:
+                    para = choose_para(content)
+                tags = [str(t).lower() for t in data.get("tags", [])] if isinstance(data.get("tags"), list) else extract_tags(content)
+                return {
+                    "id": uuid.uuid4().hex,
+                    "raw_id": record.get("id") or record.get("raw_id"),
+                    "title": data.get("title") or make_title(record),
+                    "para": para,
+                    "body": data.get("body") or content,
+                    "content": content,
+                    "tags": tags,
+                    "summary": data.get("summary") or make_summary(content),
+                    "created_at": record.get("captured_at") or now_iso(),
+                }
+            except Exception as exc:
+                if attempt == 1:
+                    print(f"Groq attempt {attempt+1} failed: {exc}. Using local heuristic.", file=sys.stderr)
+    except Exception as exc:
+        print(f"Groq client failed: {exc}. Using local heuristic.", file=sys.stderr)
+    return None
+
+
 def classify_record(record: dict) -> dict:
+    # Try Groq AI classification first
+    groq_result = classify_with_groq(record)
+    if groq_result:
+        return groq_result
+
+    # Fallback: local heuristic classifier
     content = (record.get("content") or record.get("text") or "")
     title = make_title(record)
     para = choose_para(content)
@@ -206,6 +278,7 @@ def classify_record(record: dict) -> dict:
         "id": uuid.uuid4().hex,
         "raw_id": record.get("id") or record.get("raw_id"),
         "title": title,
+        "para": para,
         "body": content,
         "content": content,
         "tags": tags,
@@ -223,7 +296,7 @@ def main(argv: list[str] | None = None):
     config.ensure_project_dirs()
 
     if config.groq_configured():
-        print("GROQ_API_KEY present: remote classification could be used (not implemented). Using local heuristic classifier.")
+        print(f"GROQ_API_KEY present: using Groq (llama-3.3-70b-versatile) with local fallback.")
     else:
         print("GROQ_API_KEY not set — using local heuristic classifier.")
 
@@ -253,3 +326,4 @@ def main(argv: list[str] | None = None):
 
 if __name__ == "__main__":
     main()
+
