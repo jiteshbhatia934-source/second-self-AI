@@ -1,0 +1,287 @@
+{
+  "meta": {
+    "count": 27,
+    "embeddings_path": "C:\\Users\\jites\\OneDrive\\Attachments\\Secondself AI Brain\\data\\embeddings.pkl"
+  },
+  "notes": [
+    {
+      "slug": "archived-old-meeting-notes",
+      "title": "Archived: old meeting notes",
+      "para": "Archives",
+      "tags": [
+        "action",
+        "archived",
+        "decisions",
+        "immediate",
+        "january"
+      ],
+      "summary": "Notes from January meeting — decisions archived.",
+      "path": "C:\\Users\\jites\\OneDrive\\Attachments\\Secondself AI Brain\\wiki\\Archives\\archived-old-meeting-notes.md",
+      "has_embedding": true
+    },
+    {
+      "slug": "reading-deep-work-summary",
+      "title": "Reading: Deep Work summary",
+      "para": "Areas",
+      "tags": [
+        "deep",
+        "work",
+        "blocks",
+        "focus",
+        "idea"
+      ],
+      "summary": "Summary of Cal Newport''s Deep Work: focus in long, uninterrupted blocks.",
+      "path": "C:\\Users\\jites\\OneDrive\\Attachments\\Secondself AI Brain\\wiki\\Areas\\reading-deep-work-summary.md",
+      "has_embedding": true
+    },
+    {
+      "slug": "1-program-ka-purpose-kya-hai-1",
+      "title": "1-program-ka-purpose-kya-hai-1",
+      "para": "",
+      "tags": [],
+      "summary": "",
+      "path": "C:\\Users\\jites\\OneDrive\\Attachments\\Secondself AI Brain\\wiki\\Projects\\1-program-ka-purpose-kya-hai-1.md",
+      "has_embedding": true
+    },
+    {
+      "slug": "1-program-ka-purpose-kya-hai-2",
+      "title": "1-program-ka-purpose-kya-hai-2",
+      "para": "",
+      "tags": [],
+      "summary": "",
+      "path": "C:\\Users\\jites\\OneDrive\\Attachments\\Secondself AI Brain\\wiki\\Projects\\1-program-ka-purpose-kya-hai-2.md",
+      "has_embedding": true
+    },
+    {
+      "slug": "1-program-ka-purpose-kya-hai",
+      "title": "1-program-ka-purpose-kya-hai",
+      "para": "",
+      "tags": [],
+      "summary": "",
+      "path": "C:\\Users\\jites\\OneDrive\\Attachments\\Secondself AI Brain\\wiki\\Projects\\1-program-ka-purpose-kya-hai.md",
+      "has_embedding": true
+    },
+    {
+      "slug": "project-personal-website-redesign",
+      "title": "Project: Personal Website Redesign",
+      "para": "Projects",
+      "tags": [
+        "beta",
+        "blog",
+        "homepage",
+        "improve",
+        "launch"
+      ],
+      "summary": "Tasks: redesign homepage, improve load time, add blog.",
+      "path": "C:\\Users\\jites\\OneDrive\\Attachments\\Secondself AI Brain\\wiki\\Projects\\project-personal-website-redesign.md",
+      "has_embedding": true
+    },
+    {
+      "slug": "secondself-1",
+      "title": "secondself-1",
+      "para": "",
+      "tags": [],
+      "summary": "",
+      "path": "C:\\Users\\jites\\OneDrive\\Attachments\\Secondself AI Brain\\wiki\\Projects\\secondself-1.md",
+      "has_embedding": true
+    },
+    {
+      "slug": "secondself-2",
+      "title": "secondself-2",
+      "para": "",
+      "tags": [],
+      "summary": "",
+      "path": "C:\\Users\\jites\\OneDrive\\Attachments\\Secondself AI Brain\\wiki\\Projects\\secondself-2.md",
+      "has_embedding": true
+    },
+    {
+      "slug": "secondself",
+      "title": "secondself",
+      "para": "",
+      "tags": [],
+      "summary": "",
+      "path": "C:\\Users\\jites\\OneDrive\\Attachments\\Secondself AI Brain\\wiki\\Projects\\secondself.md",
+      "has_embedding": true
+    },
+    {
+      "slug": "area-health-routines",
+      "title": "Area: Health routines",
+      "para": "Resources",
+      "tags": [
+        "consistency",
+        "daily",
+        "health",
+        "hydration",
+        "maintain"
+      ],
+      "summary": "Daily routines for health: sleep schedule, morning walk, hydration reminders.",
+      "path": "C:\\Users\\jites\\OneDrive\\Attachments\\Secondself AI Brain\\wiki\\Resources\\area-health-routines.md",
+      "has_embedding": true
+    },
+    {
+      "slug": "https-example-com-article-1",
+      "title": "https-example-com-article-1",
+      "para": "",
+      "tags": [],
+      "summary": "",
+      "path": "C:\\Users\\jites\\OneDrive\\Attachments\\Secondself AI Brain\\wiki\\Resources\\https-example-com-article-1.md",
+      "has_embedding": true
+    },
+    {
+      "slug": "https-example-com-article-2",
+      "title": "https-example-com-article-2",
+      "para": "",
+      "tags": [],
+      "summary": "",
+      "path": "C:\\Users\\jites\\OneDrive\\Attachments\\Secondself AI Brain\\wiki\\Resources\\https-example-com-article-2.md",
+      "has_embedding": true
+    },
+    {
+      "slug": "https-example-com-article-3",
+      "title": "https-example-com-article-3",
+      "para": "",
+      "tags": [],
+      "summary": "",
+      "path": "C:\\Users\\jites\\OneDrive\\Attachments\\Secondself AI Brain\\wiki\\Resources\\https-example-com-article-3.md",
+      "has_embedding": true
+    },
+    {
+      "slug": "https-example-com-article-4",
+      "title": "https-example-com-article-4",
+      "para": "",
+      "tags": [],
+      "summary": "",
+      "path": "C:\\Users\\jites\\OneDrive\\Attachments\\Secondself AI Brain\\wiki\\Resources\\https-example-com-article-4.md",
+      "has_embedding": true
+    },
+    {
+      "slug": "https-example-com-article-5",
+      "title": "https-example-com-article-5",
+      "para": "",
+      "tags": [],
+      "summary": "",
+      "path": "C:\\Users\\jites\\OneDrive\\Attachments\\Secondself AI Brain\\wiki\\Resources\\https-example-com-article-5.md",
+      "has_embedding": true
+    },
+    {
+      "slug": "https-example-com-article",
+      "title": "https-example-com-article",
+      "para": "",
+      "tags": [],
+      "summary": "",
+      "path": "C:\\Users\\jites\\OneDrive\\Attachments\\Secondself AI Brain\\wiki\\Resources\\https-example-com-article.md",
+      "has_embedding": true
+    },
+    {
+      "slug": "idea-weekly-review-template-1",
+      "title": "idea-weekly-review-template-1",
+      "para": "",
+      "tags": [],
+      "summary": "",
+      "path": "C:\\Users\\jites\\OneDrive\\Attachments\\Secondself AI Brain\\wiki\\Resources\\idea-weekly-review-template-1.md",
+      "has_embedding": true
+    },
+    {
+      "slug": "idea-weekly-review-template-2",
+      "title": "idea-weekly-review-template-2",
+      "para": "",
+      "tags": [],
+      "summary": "",
+      "path": "C:\\Users\\jites\\OneDrive\\Attachments\\Secondself AI Brain\\wiki\\Resources\\idea-weekly-review-template-2.md",
+      "has_embedding": true
+    },
+    {
+      "slug": "idea-weekly-review-template-3",
+      "title": "idea-weekly-review-template-3",
+      "para": "",
+      "tags": [],
+      "summary": "",
+      "path": "C:\\Users\\jites\\OneDrive\\Attachments\\Secondself AI Brain\\wiki\\Resources\\idea-weekly-review-template-3.md",
+      "has_embedding": true
+    },
+    {
+      "slug": "idea-weekly-review-template-4",
+      "title": "idea-weekly-review-template-4",
+      "para": "",
+      "tags": [],
+      "summary": "",
+      "path": "C:\\Users\\jites\\OneDrive\\Attachments\\Secondself AI Brain\\wiki\\Resources\\idea-weekly-review-template-4.md",
+      "has_embedding": true
+    },
+    {
+      "slug": "idea-weekly-review-template-5",
+      "title": "idea-weekly-review-template-5",
+      "para": "",
+      "tags": [],
+      "summary": "",
+      "path": "C:\\Users\\jites\\OneDrive\\Attachments\\Secondself AI Brain\\wiki\\Resources\\idea-weekly-review-template-5.md",
+      "has_embedding": true
+    },
+    {
+      "slug": "idea-weekly-review-template-6",
+      "title": "idea-weekly-review-template-6",
+      "para": "",
+      "tags": [],
+      "summary": "",
+      "path": "C:\\Users\\jites\\OneDrive\\Attachments\\Secondself AI Brain\\wiki\\Resources\\idea-weekly-review-template-6.md",
+      "has_embedding": true
+    },
+    {
+      "slug": "idea-weekly-review-template-7",
+      "title": "idea-weekly-review-template-7",
+      "para": "",
+      "tags": [],
+      "summary": "",
+      "path": "C:\\Users\\jites\\OneDrive\\Attachments\\Secondself AI Brain\\wiki\\Resources\\idea-weekly-review-template-7.md",
+      "has_embedding": true
+    },
+    {
+      "slug": "idea-weekly-review-template-8",
+      "title": "idea-weekly-review-template-8",
+      "para": "",
+      "tags": [],
+      "summary": "",
+      "path": "C:\\Users\\jites\\OneDrive\\Attachments\\Secondself AI Brain\\wiki\\Resources\\idea-weekly-review-template-8.md",
+      "has_embedding": true
+    },
+    {
+      "slug": "idea-weekly-review-template",
+      "title": "idea-weekly-review-template",
+      "para": "",
+      "tags": [],
+      "summary": "",
+      "path": "C:\\Users\\jites\\OneDrive\\Attachments\\Secondself AI Brain\\wiki\\Resources\\idea-weekly-review-template.md",
+      "has_embedding": true
+    },
+    {
+      "slug": "resource-python-tips-and-snippets",
+      "title": "Resource: Python tips and snippets",
+      "para": "Resources",
+      "tags": [
+        "coding",
+        "comprehensions",
+        "context",
+        "list",
+        "managers"
+      ],
+      "summary": "Useful Python snippets: list comprehensions, context managers, pathlib usage.",
+      "path": "C:\\Users\\jites\\OneDrive\\Attachments\\Secondself AI Brain\\wiki\\Resources\\resource-python-tips-and-snippets.md",
+      "has_embedding": true
+    },
+    {
+      "slug": "weekly-review-template",
+      "title": "Weekly review template",
+      "para": "Resources",
+      "tags": [
+        "actions",
+        "every",
+        "friday",
+        "learnings",
+        "next"
+      ],
+      "summary": "Weekly review: reflect on wins, learnings, and next actions.",
+      "path": "C:\\Users\\jites\\OneDrive\\Attachments\\Secondself AI Brain\\wiki\\Resources\\weekly-review-template.md",
+      "has_embedding": true
+    }
+  ]
+}
