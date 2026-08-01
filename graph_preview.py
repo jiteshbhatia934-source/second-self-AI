@@ -113,8 +113,19 @@ with st.sidebar:
                         try:
                             args = ["--force"] if force else []
                             classify.main(args)
+                            # Rebuild graph and embeddings so Ask sees new notes immediately
                             build_graph.build_graph()
-                            st.success("Captured -> classified -> graph rebuilt.")
+                            try:
+                                from lib import embeddings as _emb
+                                notes = storage.read_wiki_notes()
+                                note_tuples = [
+                                    (n.slug, "\n".join([n.title or n.id, n.summary or "", n.body or ""]).strip(), Path(config.WIKI_DIR) / n.path)
+                                    for n in notes
+                                ]
+                                _emb.build_note_embeddings(note_tuples, model_name=config.EMBEDDING_MODEL)
+                            except Exception:
+                                pass
+                            st.success("Captured -> classified -> graph rebuilt and embeddings updated.")
                             st.experimental_rerun()
                         except Exception as exc:
                             st.error(f"Pipeline failed: {exc}")
@@ -127,8 +138,19 @@ with st.sidebar:
             try:
                 args = ["--force"] if force else []
                 classify.main(args)
+                # Rebuild graph and update persisted embeddings
                 build_graph.build_graph()
-                st.success("Processed captures and rebuilt graph.")
+                try:
+                    from lib import embeddings as _emb
+                    notes = storage.read_wiki_notes()
+                    note_tuples = [
+                        (n.slug, "\n".join([n.title or n.id, n.summary or "", n.body or ""]).strip(), Path(config.WIKI_DIR) / n.path)
+                        for n in notes
+                    ]
+                    _emb.build_note_embeddings(note_tuples, model_name=config.EMBEDDING_MODEL)
+                except Exception:
+                    pass
+                st.success("Processed captures and rebuilt graph and embeddings.")
                 st.experimental_rerun()
             except Exception as exc:
                 st.error(f"Pipeline failed: {exc}")
