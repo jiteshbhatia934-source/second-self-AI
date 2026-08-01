@@ -254,6 +254,7 @@ def read_wiki_notes() -> List[WikiNote]:
             notes.append(WikiNote(
                 id=str(meta.get("id") or path.stem),
                 raw_id=str(meta.get("raw_id") or ""),
+                slug=path.stem,
                 para=str(meta.get("para") or path.parent.name),
                 tags=meta.get("tags") or [],
                 summary=str(meta.get("summary") or ""),

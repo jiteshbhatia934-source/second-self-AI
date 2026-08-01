@@ -90,7 +90,11 @@ def build_graph(
         # Register lookup targets
         for key in {node_id, node_id.lower(), label, label.lower()}:
             target_lookup.setdefault(key, node_id)
-        # Also register the filename stem (may differ from id)
+        # Also register the wiki file slug/stem so links can resolve even when note IDs are UUIDs.
+        if hasattr(note, 'slug') and note.slug:
+            target_lookup.setdefault(note.slug, node_id)
+            target_lookup.setdefault(note.slug.lower(), node_id)
+        # Fallback: register a normalized form of the node ID.
         stem = re.sub(r"[^a-z0-9-]", "-", node_id.lower()).strip("-")
         target_lookup.setdefault(stem, node_id)
 

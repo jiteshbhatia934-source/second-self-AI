@@ -38,6 +38,7 @@ class WikiNote:
     """Represents a parsed wiki/{para}/{id}.md file."""
     id: str
     raw_id: str
+    slug: str
     para: str                          # Projects | Areas | Resources | Archives
     tags: List[str] = field(default_factory=list)
     summary: str = ""

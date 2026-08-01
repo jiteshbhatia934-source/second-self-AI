@@ -283,5 +283,8 @@
       "path": "C:\\Users\\jites\\OneDrive\\Attachments\\Secondself AI Brain\\wiki\\Resources\\weekly-review-template.md",
       "has_embedding": true
     }
-  ]
+  ],
+  "raw_processed": {},
+  "embeddings_version": "all-MiniLM-L6-v2",
+  "last_graph_build": "2026-08-01T03:05:34.371976+00:00"
 }
