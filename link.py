@@ -192,8 +192,10 @@ def main():
             continue
         p = slug_map[s]
         meta, body = parse_markdown(p)
-        # Avoid adding link to those already present in the file body
+        # Avoid adding link to those already present in the file body or front matter links
         existing_links = set(find_wikilinks_in_text(body))
+        if isinstance(meta.get("links"), list):
+            existing_links.update(str(link) for link in meta.get("links"))
         to_add = [l for l in linked_slugs if l not in existing_links]
         if not to_add:
             continue
