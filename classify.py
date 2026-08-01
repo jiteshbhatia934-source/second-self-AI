@@ -145,10 +145,13 @@ def make_summary(content: str, max_len: int = 200) -> str:
 
 
 def make_title(record: dict) -> str:
-    # Prefer explicit title, then first heading/line
-    for key in ("title", "name", "headline"):
+    # Prefer explicit title, then original file name, then first heading/line
+    meta = record.get("metadata") or {}
+    for key in ("title", "name", "headline", "original_filename"):
         if key in record and record[key]:
             return str(record[key]).strip()
+        if key in meta and meta[key]:
+            return str(meta[key]).strip()
     content = (record.get("content") or record.get("text") or "").strip()
     if not content:
         return f"Note {record.get('id')[:8]}"
@@ -338,7 +341,13 @@ def classify_record(record: dict) -> dict:
         return groq_result
 
     # Fallback: local heuristic classifier
-    content = (record.get("content") or record.get("text") or "")
+    metadata = record.get("metadata") or {}
+    content = (record.get("content") or record.get("text") or "").strip()
+    if record.get("source_type") == "file":
+        if metadata.get("original_filename"):
+            content = f"{metadata['original_filename']}\n{content}".strip()
+        if metadata.get("file_path_ref"):
+            content = f"{content}\n\nFile path: {metadata['file_path_ref']}".strip()
     title = make_title(record)
     para = choose_para(content)
     tags = extract_tags(content)
