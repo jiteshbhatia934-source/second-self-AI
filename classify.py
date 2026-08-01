@@ -158,6 +158,36 @@ def make_title(record: dict) -> str:
     return f"Note {record.get('id')[:8]}"
 
 
+def _write_wiki_file(path: Path, note: dict) -> Path:
+    fm = {
+        "id": note["id"],
+        "raw_id": note.get("raw_id") or note.get("id"),
+        "para": note.get("para"),
+        "tags": note.get("tags", []),
+        "summary": note.get("summary", ""),
+        "title": note.get("title"),
+        "created_at": note.get("created_at") or now_iso(),
+        "classified_at": now_iso(),
+    }
+    # Build YAML front matter manually (avoid external deps)
+    fm_lines = ["---"]
+    for k, v in fm.items():
+        if isinstance(v, list):
+            fm_lines.append(f"{k}:")
+            for item in v:
+                safe_item = str(item).replace("'", "''")
+                fm_lines.append(f"  - '{safe_item}'")
+        else:
+            val = str(v).replace("'", "''")
+            fm_lines.append(f"{k}: '{val}'")
+    fm_lines.append("---\n")
+
+    body = note.get("body") or note.get("content") or ""
+    text = "\n".join(fm_lines) + body + "\n"
+    path.write_text(text, encoding="utf-8")
+    return path
+
+
 def write_wiki(note: dict, para: str, wiki_dir: Path):
     title = note["title"]
     slug = slugify(title)
@@ -168,32 +198,60 @@ def write_wiki(note: dict, para: str, wiki_dir: Path):
     while candidate.exists():
         suffix += 1
         candidate = folder / f"{slug}-{suffix}.md"
-    fm = {
-        "id": note["id"],
-        "raw_id": note.get("raw_id") or note.get("id"),
-        "para": para,
-        "tags": note.get("tags", []),
-        "summary": note.get("summary", ""),
-        "title": title,
-        "created_at": note.get("created_at") or now_iso(),
-        "classified_at": now_iso(),
-    }
-    # Build YAML front matter manually (avoid external deps)
-    fm_lines = ["---"]
-    for k, v in fm.items():
-        if isinstance(v, list):
-            fm_lines.append(f"{k}:")
-            for item in v:
-                fm_lines.append(f"  - '{str(item).replace("'", "\'\'")}'")
-        else:
-            val = str(v).replace("'", "''")
-            fm_lines.append(f"{k}: '{val}'")
-    fm_lines.append("---\n")
+    return _write_wiki_file(candidate, note)
 
-    body = note.get("body") or note.get("content") or ""
-    text = "\n".join(fm_lines) + body + "\n"
-    candidate.write_text(text, encoding="utf-8")
-    return candidate
+
+def has_front_matter(text: str) -> bool:
+    return text.lstrip().startswith("---")
+
+
+def infer_title_from_body(body: str, fallback: str) -> str:
+    for line in body.splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        m = re.match(r"^#\s*(.+)$", line)
+        if m:
+            return m.group(1).strip()
+        return line[:120]
+    return fallback
+
+
+def normalize_wiki_note(path: Path, para: str) -> None:
+    text = path.read_text(encoding="utf-8", errors="replace")
+    if has_front_matter(text):
+        return
+    body = text.strip() + "\n"
+    title = infer_title_from_body(body, path.stem.replace("-", " ").title())
+    summary = make_summary(body)
+    tags = extract_tags(body)
+    note = {
+        "id": path.stem,
+        "raw_id": path.stem,
+        "para": para,
+        "tags": tags,
+        "summary": summary,
+        "title": title,
+        "created_at": now_iso(),
+        "classified_at": now_iso(),
+        "body": body,
+    }
+    _write_wiki_file(path, note)
+
+
+def normalize_wiki_notes(wiki_dir: Path) -> int:
+    count = 0
+    for md in sorted(wiki_dir.rglob("*.md")):
+        try:
+            rel = md.relative_to(wiki_dir)
+            para = rel.parts[0] if len(rel.parts) > 1 else "Resources"
+            text = md.read_text(encoding="utf-8", errors="replace")
+            if not has_front_matter(text):
+                normalize_wiki_note(md, para)
+                count += 1
+        except Exception:
+            continue
+    return count
 
 
 def classify_with_groq(record: dict) -> dict | None:
@@ -291,9 +349,16 @@ def classify_record(record: dict) -> dict:
 def main(argv: list[str] | None = None):
     p = argparse.ArgumentParser(description="Classify raw captures into PARA wiki notes (Phase 2.1)")
     p.add_argument("--force", action="store_true", help="Re-classify even if wiki entry already exists")
+    p.add_argument("--normalize", action="store_true", help="Normalize existing wiki notes by adding missing front matter")
     args = p.parse_args(argv)
 
     config.ensure_project_dirs()
+
+    if args.normalize:
+        normalized = normalize_wiki_notes(config.WIKI_DIR)
+        print(f"Normalized {normalized} wiki note(s) with missing front matter.")
+        if not args.force:
+            return
 
     if config.groq_configured():
         print(f"GROQ_API_KEY present: using Groq (llama-3.3-70b-versatile) with local fallback.")
