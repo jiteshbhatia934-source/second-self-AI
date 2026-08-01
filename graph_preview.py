@@ -19,6 +19,8 @@ import streamlit.components.v1 as components
 
 import config
 import build_graph
+import classify
+from lib import storage
 
 # ── Page config ───────────────────────────────────────────────────────────────
 st.set_page_config(
@@ -90,6 +92,55 @@ if meta.get("generated_at"):
     except Exception:
         ts_str = meta["generated_at"]
     c3.metric("🕒 Built", ts_str)
+
+# Sidebar pipeline
+with st.sidebar:
+    st.markdown("## Capture")
+    quick_note = st.text_area("Quick note", height=100, key="sidebar_quick_note")
+    st.write("")  # spacer
+    auto = st.checkbox("Auto process after capture", value=True, key="sidebar_auto")
+    force = st.checkbox("Force re-process", value=False, key="sidebar_force")
+    if st.button("Capture note", key="sidebar_capture_btn"):
+        if not quick_note.strip():
+            st.warning("Enter note text to capture.")
+        else:
+            try:
+                import capture as cap_mod
+                cap_mod.capture_note(quick_note)
+                st.success("Captured note into raw/")
+                if auto:
+                    with st.spinner("Processing new captures..."):
+                        try:
+                            args = ["--force"] if force else []
+                            classify.main(args)
+                            build_graph.build_graph()
+                            st.success("Captured -> classified -> graph rebuilt.")
+                            st.experimental_rerun()
+                        except Exception as exc:
+                            st.error(f"Pipeline failed: {exc}")
+            except Exception as exc:
+                st.error(f"Capture failed: {exc}")
+    st.markdown("---")
+    st.markdown("## Pipeline")
+    if st.button("Process new captures", key="sidebar_process_btn"):
+        with st.spinner("Processing new captures..."):
+            try:
+                args = ["--force"] if force else []
+                classify.main(args)
+                build_graph.build_graph()
+                st.success("Processed captures and rebuilt graph.")
+                st.experimental_rerun()
+            except Exception as exc:
+                st.error(f"Pipeline failed: {exc}")
+    st.markdown("---")
+    st.markdown("## Stats")
+    try:
+        wiki_count = len(list(storage.read_wiki_notes()))
+    except Exception:
+        wiki_count = "n/a"
+    st.write(f"Wiki notes: {wiki_count}")
+    st.write(f"Graph nodes: {meta.get('node_count', len(graph_data.get('nodes', [])))}")
+    st.write(f"Graph edges: {meta.get('edge_count', len(graph_data.get('edges', [])))}")
 
 st.divider()
 
