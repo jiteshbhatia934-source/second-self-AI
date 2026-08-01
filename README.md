@@ -57,8 +57,19 @@ Relative path overrides are resolved from this repository, not from the shell's 
 ## Planned workflow
 
 ```text
-capture → raw/ → classify → wiki/ → link → graph.json → Streamlit graph + ask
+capture → raw/ → classify → wiki/ → link → graph.json → graph preview → ask
 ```
+
+## Graph preview
+
+Once you have built `data/graph.json`, open the local graph viewer with:
+
+```powershell
+python build_graph.py
+streamlit run graph_preview.py
+```
+
+The preview uses `static/graph.html` and `data/graph.json` to render an interactive force-directed graph with hover tooltips, drag/zoom, PARA filters, and note details.
 
 The implementation plan lists the commands as each stage is introduced.
 
