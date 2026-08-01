@@ -26,7 +26,7 @@ from typing import Dict, List, Tuple
 import numpy as np
 
 import config
-from embeddings import build_note_embeddings, load_embeddings, save_embeddings, EMBEDDINGS_PATH
+from lib.embeddings import build_note_embeddings, EMBEDDINGS_PATH
 
 
 FRONT_MATTER_RE = re.compile(r"^---\s*\n(.*?)\n---\s*\n(.*)$", re.S)
