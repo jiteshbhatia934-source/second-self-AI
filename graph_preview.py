@@ -93,6 +93,74 @@ if meta.get("generated_at"):
 
 st.divider()
 
+# ── Ask and Capture UI ───────────────────────────────────────────────────────
+with st.expander("Ask your wiki (Question)", expanded=True):
+    question = st.text_input("Ask a question", key="ask_question")
+    ask_btn = st.button("Ask", key="ask_button")
+    if ask_btn:
+        if not question.strip():
+            st.warning("Please enter a non-empty question.")
+        else:
+            with st.spinner("Searching notes…"):
+                try:
+                    # Import the local ask module and call ask() directly so we avoid shelling out.
+                    import ask as ask_mod
+                    result = ask_mod.ask(question)
+                    st.markdown("**Answer:**")
+                    st.write(result.get("answer"))
+                    if result.get("sources"):
+                        st.markdown("**Sources:**")
+                        for src in result.get("sources", []):
+                            st.write(f"- {src.get('title')} ({src.get('path')}) — score={src.get('relevance_score'):.3f}")
+                except Exception as exc:  # pragma: no cover - runtime UI handling
+                    st.error(f"Ask failed: {exc}")
+
+with st.expander("Capture note / link / file", expanded=False):
+    cap_type = st.radio("Capture type", ["note", "link", "file"], horizontal=True, key="capture_type")
+    if cap_type == "note":
+        note_text = st.text_area("Note text", height=120, key="note_text")
+        if st.button("Capture note", key="capture_note_btn"):
+            if not note_text.strip():
+                st.warning("Enter note text to capture.")
+            else:
+                try:
+                    import capture as cap_mod
+                    cap_mod.capture_note(note_text)
+                    st.success("Captured note into raw/ — run classify.py to import into wiki/")
+                except Exception as exc:  # pragma: no cover - runtime UI handling
+                    st.error(f"Capture note failed: {exc}")
+    elif cap_type == "link":
+        url = st.text_input("URL to capture (include https://)", key="capture_link_url")
+        if st.button("Capture link", key="capture_link_btn"):
+            if not url.strip():
+                st.warning("Enter a URL to capture.")
+            else:
+                try:
+                    import capture as cap_mod
+                    cap_mod.capture_link(url.strip())
+                    st.success("Captured link into raw/ — run classify.py to import into wiki/")
+                except Exception as exc:  # pragma: no cover - runtime UI handling
+                    st.error(f"Capture link failed: {exc}")
+    else:
+        uploaded = st.file_uploader("Upload file to capture", key="capture_file_uploader")
+        if uploaded is not None:
+            st.write(f"Selected file: {uploaded.name} ({uploaded.type})")
+            if st.button("Upload and capture file", key="capture_file_btn"):
+                try:
+                    import tempfile
+                    tmpdir = Path(config.PROJECT_ROOT) / "tmp_uploads"
+                    tmpdir.mkdir(parents=True, exist_ok=True)
+                    save_to = tmpdir / uploaded.name
+                    # Write the uploaded file to disk so capture_file() can copy it into raw/files
+                    with open(save_to, "wb") as fh:
+                        fh.write(uploaded.getbuffer())
+                    import capture as cap_mod
+                    cap_mod.capture_file(save_to)
+                    st.success(f"Captured file: {uploaded.name} into raw/files — run classify.py to import into wiki/")
+                except Exception as exc:  # pragma: no cover - runtime UI handling
+                    st.error(f"Capture file failed: {exc}")
+
+
 # ── Render static/graph.html with inlined data ────────────────────────────────
 if not GRAPH_HTML.exists():
     st.error(
