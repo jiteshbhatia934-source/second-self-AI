@@ -144,10 +144,25 @@ def make_summary(content: str, max_len: int = 200) -> str:
     return s[:max_len].rstrip() + ("..." if len(s) > max_len else "")
 
 
+def _normalize_url(url: str) -> str:
+    url = str(url or "").strip()
+    if not url:
+        return ""
+    if url.startswith("mailto:"):
+        return url
+    if re.match(r"^[^:/?#]+@[^@]+\.[^@]+$", url):
+        return url
+    if url.startswith("www."):
+        return "https://" + url
+    if not re.match(r"^[a-zA-Z][a-zA-Z0-9+.-]*://", url):
+        return "https://" + url
+    return url
+
+
 def make_title(record: dict) -> str:
-    # Prefer explicit title, then original file name, then first heading/line
+    # Prefer explicit title, then original file name or URL, then first heading/line
     meta = record.get("metadata") or {}
-    for key in ("title", "name", "headline", "original_filename"):
+    for key in ("title", "name", "headline", "original_filename", "url"):
         if key in record and record[key]:
             return str(record[key]).strip()
         if key in meta and meta[key]:
@@ -348,6 +363,16 @@ def classify_record(record: dict) -> dict:
             content = f"{metadata['original_filename']}\n{content}".strip()
         if metadata.get("file_path_ref"):
             content = f"{content}\n\nFile path: {metadata['file_path_ref']}".strip()
+
+    if record.get("source_type") == "link":
+        url = metadata.get("url") or content
+        normalized = _normalize_url(url)
+        if normalized:
+            if content and content != normalized:
+                content = f"{content}\n\nLink: {normalized}".strip()
+            else:
+                content = normalized
+
     title = make_title(record)
     para = choose_para(content)
     tags = extract_tags(content)

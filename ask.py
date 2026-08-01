@@ -12,7 +12,7 @@ import argparse
 import json
 import re
 import sys
-from typing import Any
+from typing import Any, Iterable
 
 import numpy as np
 import config
@@ -48,6 +48,30 @@ def _token_set(text: str) -> set[str]:
     return set(t for t in _normalize_text(text).split() if len(t) > 1)
 
 
+def _extract_urls_and_emails(text: str) -> list[str]:
+    text = str(text or "")
+    urls = re.findall(r"(https?://[^\s\)\]\"']+|www\.[^\s\)\]\"']+)", text, flags=re.IGNORECASE)
+    emails = re.findall(r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}", text)
+    return urls + emails
+
+
+def _build_direct_answer(query: str, note: WikiNote, values: list[str]) -> str | None:
+    if not values:
+        return None
+    q = query.lower()
+    if "linkedin" in q:
+        chosen = next((v for v in values if "linkedin" in v.lower()), None)
+        if chosen:
+            return f"LinkedIn profile: {chosen}"
+    if "gmail" in q or "email" in q or "mail" in q:
+        chosen = next((v for v in values if "@" in v), None)
+        if chosen:
+            return f"Email address: {chosen}"
+    if "url" in q or "link" in q:
+        return f"Found link: {values[0]}"
+    return None
+
+
 def _note_search_bonus(note: WikiNote, query: str, query_terms: set[str]) -> float:
     bonus = 0.0
     query_norm = _normalize_query(query)
@@ -60,19 +84,35 @@ def _note_search_bonus(note: WikiNote, query: str, query_terms: set[str]) -> flo
     }
 
     title_norm = _normalize_text(note_fields["title"])
+    path_norm = _normalize_text(note_fields["path"])
+    summary_norm = _normalize_text(note_fields["summary"])
+    body_norm = _normalize_text(note_fields["body"])
+
     if query_norm and query_norm == title_norm:
-        return 1.0
+        return 2.0
     if query_norm and query_norm in title_norm:
+        bonus += 1.2
+    if query_norm and query_norm in path_norm:
+        bonus += 1.0
+    if query_norm and query_norm in summary_norm:
         bonus += 0.6
-    if query_norm and query_norm in _normalize_text(note_fields["path"]):
-        bonus += 0.5
-    if query_norm and query_norm in _normalize_text(note_fields["summary"]):
-        bonus += 0.25
+    if query_norm and query_norm in body_norm:
+        bonus += 0.4
 
     note_terms = _token_set(" ".join(note_fields.values()))
     common = query_terms & note_terms
     if common:
-        bonus += min(0.3, 0.05 * len(common))
+        bonus += min(0.8, 0.1 * len(common))
+
+    ql = query.lower()
+    if "linkedin" in ql and "linkedin" in title_norm:
+        bonus += 1.5
+    if "gmail" in ql and "@gmail.com" in note.body.lower():
+        bonus += 1.5
+    if "email" in ql and re.search(r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}", note.body):
+        bonus += 1.2
+    if "linkedin" in ql and "linkedin" in note.body.lower():
+        bonus += 1.0
 
     return bonus
 
@@ -170,6 +210,13 @@ def ask(question: str) -> dict[str, Any]:
                 "relevance_score": float(score),
             }
         )
+
+    if matches:
+        primary_note = matches[0][0]
+        direct_values = _extract_urls_and_emails(primary_note.body + "\n" + primary_note.summary)
+        direct_answer = _build_direct_answer(question, primary_note, direct_values)
+        if direct_answer:
+            return AskResult(answer=direct_answer, sources=sources).__dict__
 
     if not config.groq_configured():
         answer = (
