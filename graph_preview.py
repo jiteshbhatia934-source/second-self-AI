@@ -113,6 +113,13 @@ with st.sidebar:
                         try:
                             args = ["--force"] if force else []
                             classify.main(args)
+                            # Remove duplicate Resources notes before building the graph
+                            try:
+                                removed = classify.dedupe_resources(config.WIKI_DIR)
+                                if removed:
+                                    st.info(f"Removed {removed} duplicated resource note(s).")
+                            except Exception:
+                                pass
                             # Rebuild graph and embeddings so Ask sees new notes immediately
                             build_graph.build_graph()
                             try:
@@ -125,7 +132,7 @@ with st.sidebar:
                                 _emb.build_note_embeddings(note_tuples, model_name=config.EMBEDDING_MODEL)
                             except Exception:
                                 pass
-                            st.success("Captured -> classified -> graph rebuilt and embeddings updated.")
+                            st.success("Captured -> classified -> deduped resources -> graph rebuilt and embeddings updated.")
                             st.experimental_rerun()
                         except Exception as exc:
                             st.error(f"Pipeline failed: {exc}")
@@ -138,6 +145,13 @@ with st.sidebar:
             try:
                 args = ["--force"] if force else []
                 classify.main(args)
+                # Remove duplicate Resources notes before building the graph
+                try:
+                    removed = classify.dedupe_resources(config.WIKI_DIR)
+                    if removed:
+                        st.info(f"Removed {removed} duplicated resource note(s).")
+                except Exception:
+                    pass
                 # Rebuild graph and update persisted embeddings
                 build_graph.build_graph()
                 try:

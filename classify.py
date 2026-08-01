@@ -391,6 +391,46 @@ def classify_record(record: dict) -> dict:
     return note
 
 
+import hashlib
+
+
+def dedupe_resources(wiki_dir: Path | None = None) -> int:
+    """Remove duplicated notes under the Resources folder.
+
+    Duplicate detection uses a normalized-body SHA-256 hash; the first-seen
+    file (sorted by path) is kept and subsequent files with identical body
+    content are removed. Returns the number of files removed.
+    """
+    from lib.storage import parse_front_matter
+
+    wiki_dir = wiki_dir or config.WIKI_DIR
+    res_dir = wiki_dir / "Resources"
+    if not res_dir.exists():
+        return 0
+    seen: dict[str, str] = {}
+    removed = 0
+    for md in sorted(res_dir.rglob("*.md")):
+        try:
+            text = md.read_text(encoding="utf-8", errors="replace")
+            meta, body = parse_front_matter(text)
+            # Normalize body: remove whitespace runs and frontmatter differences
+            norm = re.sub(r"\s+", " ", body.strip())
+            h = hashlib.sha256(norm.encode("utf-8", errors="replace")).hexdigest()
+            if h in seen:
+                try:
+                    md.unlink()
+                    removed += 1
+                    print(f"Removed duplicate: {md} (same as {seen[h]})")
+                except Exception:
+                    # ignore deletion failures
+                    continue
+            else:
+                seen[h] = str(md.name)
+        except Exception:
+            continue
+    return removed
+
+
 def main(argv: list[str] | None = None):
     p = argparse.ArgumentParser(description="Classify raw captures into PARA wiki notes (Phase 2.1)")
     p.add_argument("--force", action="store_true", help="Re-classify even if wiki entry already exists")
