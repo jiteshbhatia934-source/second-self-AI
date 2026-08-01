@@ -73,12 +73,14 @@ def build_graph(
 
     for note in notes:
         node_id = note.id
-        label = note.summary or note.id
+        label = note.summary or note.title or note.id
         content_preview = _snippet(note.body)
 
         node = GraphNode(
             id=node_id,
             label=label,
+            title=note.title,
+            path=str(note.path) if hasattr(note, 'path') else '',
             para=note.para,
             tags=note.tags,
             summary=note.summary,
@@ -143,6 +145,8 @@ def build_graph(
         {
             "id": n.id,
             "label": n.label,
+            "title": n.title,
+            "path": n.path,
             "para": n.para,
             "tags": n.tags,
             "summary": n.summary,

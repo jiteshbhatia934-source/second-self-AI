@@ -40,6 +40,8 @@ class WikiNote:
     raw_id: str
     slug: str
     para: str                          # Projects | Areas | Resources | Archives
+    title: str = ""
+    path: str = ""
     tags: List[str] = field(default_factory=list)
     summary: str = ""
     created: str = ""                  # ISO-8601
@@ -55,6 +57,8 @@ class GraphNode:
     id: str
     label: str          # shown on graph — derived from summary or title
     para: str           # PARA category → determines colour group
+    title: str = ""    # original note title
+    path: str = ""     # relative wiki file path
     tags: List[str] = field(default_factory=list)
     summary: str = ""
     content_preview: str = ""   # first ~200 chars of body
