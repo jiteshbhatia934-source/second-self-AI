@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<!--
+  static/graph.html — SecondSelf Interactive Knowledge Graph
+  Sub-Phase 3.2 deliverable per implementation-plan.md
+
+  Library: vis-network v9.1.9 (MIT)
+  Data: fetches ../data/graph.json at runtime
+  
+  Standalone test:
+    python -m http.server 8000
+    # Open http://localhost:8000/static/graph.html
+
+  Streamlit embed (Phase 4, app.py):
+    html = Path("static/graph.html").read_text()
+    st.components.v1.html(html, height=640, scrolling=False)
+
+  Schema consumed (§3.1.2):
+    {
+      "nodes": [{"id","label","para","tags","summary","content_preview","group"}],
+      "edges": [{"source","target","weight","type"}],
+      "metadata": {"generated_at","node_count","edge_count"}
+    }
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+        content="SecondSelf — interactive force-directed knowledge graph of your personal notes">
+  <title>SecondSelf — Knowledge Graph</title>
+
+  <!-- vis-network (MIT, pinned) -->
+  <script src="https://unpkg.com/vis-network@9.1.9/standalone/umd/vis-network.min.js"
+          crossorigin="anonymous"></script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+  <style>
+    /* ── Design tokens ──────────────────────────────────────────────────── */
+    :root {
+      --bg:           #07101f;
+      --bg-panel:     rgba(9, 18, 36, 0.94);
+      --bg-card:      rgba(18, 32, 58, 0.7);
+      --bg-input:     rgba(14, 24, 46, 0.9);
+      --border:       rgba(255,255,255,0.07);
+      --border-focus: rgba(56,189,248,0.5);
+      --text:         #eef4ff;
+      --muted:        #8da4c8;
+      --faint:        #3d526e;
+      --sky:          #38bdf8;
+      --indigo:       #818cf8;
+      --rose:         #f43f5e;
+
+      /* PARA palette */
+      --c-projects:   #1d4ed8;
+      --c-areas:      #065f46;
+      --c-resources:  #5b21b6;
+      --c-archives:   #334155;
+      --c-default:    #0c4a6e;
+
+      --sidebar-w: 320px;
+      --r-sm: 6px; --r-md: 10px;
+      --t: 0.17s ease;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overflow: hidden; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Pulse animation (applied via canvas state update) ──────────────── */
+    @keyframes pulse-glow {
+      0%   { opacity: 1; }
+      50%  { opacity: 0.6; }
+      100% { opacity: 1; }
+    }
+
+    /* ── Header bar ─────────────────────────────────────────────────────── */
+    #topbar {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 10px 20px;
+      background: var(--bg-panel);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+      z-index: 30;
+    }
+    #topbar h1 {
+      font-size: 1rem;
+      font-weight: 700;
+      background: linear-gradient(120deg, var(--sky), var(--indigo));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      white-space: nowrap;
+    }
+    .stat-pill {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+    .stat-pill b { color: var(--sky); }
+
+    /* search in topbar */
+    .search-wrap { position: relative; margin-left: auto; }
+    .search-wrap span {
+      position: absolute; left: 9px; top: 50%; transform: translateY(-50%);
+      color: var(--faint); font-size: 0.75rem; pointer-events: none;
+    }
+    #search {
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+      padding: 6px 10px 6px 28px;
+      color: var(--text);
+      font-size: 0.8rem;
+      font-family: inherit;
+      width: 220px;
+      outline: none;
+      transition: border-color var(--t), width var(--t);
+    }
+    #search:focus { border-color: var(--border-focus); width: 280px; }
+    #search::placeholder { color: var(--faint); }
+
+    /* PARA filter chips */
+    .filter-row { display: flex; gap: 6px; }
+    .f-btn {
+      display: flex; align-items: center; gap: 4px;
+      padding: 4px 10px; border-radius: 20px;
+      background: var(--bg-card); border: 1px solid var(--border);
+      color: var(--muted); font-size: 0.68rem; font-weight: 500;
+      cursor: pointer; transition: background var(--t), border-color var(--t), color var(--t);
+      font-family: inherit;
+    }
+    .f-btn:hover, .f-btn.active {
+      background: rgba(56,189,248,0.1);
+      border-color: rgba(56,189,248,0.3);
+      color: var(--sky);
+    }
+    .f-dot { width: 7px; height: 7px; border-radius: 50%; }
+
+    /* control buttons */
+    .ctrl-btn {
+      padding: 5px 12px; border-radius: var(--r-sm);
+      background: var(--bg-card); border: 1px solid var(--border);
+      color: var(--muted); font-size: 0.72rem; font-family: inherit;
+      cursor: pointer; transition: background var(--t), color var(--t), border-color var(--t);
+      white-space: nowrap;
+    }
+    .ctrl-btn:hover {
+      background: rgba(56,189,248,0.1); border-color: rgba(56,189,248,0.3); color: var(--sky);
+    }
+    .ctrl-btn.primary {
+      background: linear-gradient(135deg,#0369a1,#4338ca); border: none; color: #fff; font-weight: 500;
+    }
+    .ctrl-btn.primary:hover { opacity: 0.88; }
+
+    /* ── Main area ───────────────────────────────────────────────────────── */
+    #main { display: flex; flex: 1; overflow: hidden; }
+
+    /* ── Graph canvas ────────────────────────────────────────────────────── */
+    #graph-canvas {
+      flex: 1;
+      background: radial-gradient(ellipse at 45% 40%, #0d1f40 0%, var(--bg) 72%);
+    }
+
+    /* ── Sidebar ─────────────────────────────────────────────────────────── */
+    #sidebar {
+      width: var(--sidebar-w);
+      min-width: var(--sidebar-w);
+      background: var(--bg-panel);
+      backdrop-filter: blur(16px);
+      border-left: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .sb-header {
+      padding: 14px 16px 10px;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.7rem;
+      color: var(--faint);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      flex-shrink: 0;
+    }
+    #detail {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    #detail::-webkit-scrollbar { width: 3px; }
+    #detail::-webkit-scrollbar-thumb { background: rgba(148,163,184,0.18); border-radius: 2px; }
+
+    .empty-hint {
+      color: var(--faint); font-size: 0.8rem;
+      text-align: center; margin-top: 40px; line-height: 1.6;
+    }
+    .empty-hint svg { display: block; margin: 0 auto 12px; opacity: 0.2; }
+
+    /* detail card */
+    .d-title { font-size: 1rem; font-weight: 600; line-height: 1.3; }
+    .d-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 3px 10px; border-radius: 20px;
+      font-size: 0.65rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.5px; color: #fff;
+    }
+    .d-label {
+      font-size: 0.65rem; color: var(--faint);
+      font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px;
+      margin-top: 6px;
+    }
+    .d-body { font-size: 0.8rem; color: #b8cce8; line-height: 1.55; }
+    .d-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+    .d-tag {
+      background: rgba(56,189,248,0.1); color: var(--sky);
+      border: 1px solid rgba(56,189,248,0.2);
+      padding: 2px 7px; border-radius: 4px; font-size: 0.65rem;
+    }
+    .d-path {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.68rem; background: rgba(14,24,46,0.9);
+      padding: 5px 9px; border-radius: var(--r-sm);
+      color: var(--muted); word-break: break-all;
+      border: 1px solid var(--border);
+    }
+    .d-degree {
+      display: inline-block;
+      background: rgba(129,140,248,0.1); color: var(--indigo);
+      border: 1px solid rgba(129,140,248,0.22);
+      padding: 2px 8px; border-radius: 4px;
+      font-size: 0.65rem; font-weight: 500;
+    }
+
+    /* footer */
+    #footer {
+      padding: 8px 16px;
+      border-top: 1px solid var(--border);
+      font-size: 0.62rem; color: var(--faint); flex-shrink: 0;
+    }
+
+    /* vis tooltip */
+    .vis-tooltip {
+      background: rgba(9,18,36,0.96) !important;
+      border: 1px solid rgba(56,189,248,0.3) !important;
+      color: #d4e8ff !important;
+      font-family: 'Inter', sans-serif !important;
+      font-size: 0.76rem !important;
+      padding: 8px 12px !important;
+      border-radius: 8px !important;
+      max-width: 240px !important;
+      line-height: 1.5 !important;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.55) !important;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Topbar ─────────────────────────────────────────────────────────────── -->
+<header id="topbar">
+  <h1>⬡ SecondSelf Brain</h1>
+
+  <div class="stat-pill">Nodes <b id="stat-n">—</b></div>
+  <div class="stat-pill">Edges <b id="stat-e">—</b></div>
+
+  <div class="filter-row" role="group" aria-label="Filter by PARA">
+    <button class="f-btn active" id="f-all"       onclick="setFilter(null)">All</button>
+    <button class="f-btn" id="f-Projects"  onclick="setFilter('Projects')">
+      <span class="f-dot" style="background:#3b82f6"></span>Projects
+    </button>
+    <button class="f-btn" id="f-Areas"     onclick="setFilter('Areas')">
+      <span class="f-dot" style="background:#10b981"></span>Areas
+    </button>
+    <button class="f-btn" id="f-Resources" onclick="setFilter('Resources')">
+      <span class="f-dot" style="background:#8b5cf6"></span>Resources
+    </button>
+    <button class="f-btn" id="f-Archives"  onclick="setFilter('Archives')">
+      <span class="f-dot" style="background:#64748b"></span>Archives
+    </button>
+  </div>
+
+  <div class="search-wrap">
+    <span>🔍</span>
+    <input id="search" type="search" placeholder="Search title or tag…" autocomplete="off">
+  </div>
+
+  <button class="ctrl-btn primary" id="btn-physics" onclick="togglePhysics()">⏸ Freeze</button>
+  <button class="ctrl-btn"                          onclick="resetView()">↺ Reset</button>
+</header>
+
+<!-- ── Main ──────────────────────────────────────────────────────────────── -->
+<div id="main">
+  <div id="graph-canvas"></div>
+
+  <aside id="sidebar">
+    <div class="sb-header">Note Details</div>
+    <div id="detail">
+      <div class="empty-hint">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="1.2">
+          <circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="9"/>
+          <line x1="12" y1="3" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="21"/>
+          <line x1="3" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="21" y2="12"/>
+        </svg>
+        Hover or click a node<br>to explore connections.
+      </div>
+    </div>
+    <div id="footer"></div>
+  </aside>
+</div>
+
+
+<!-- ── Script ────────────────────────────────────────────────────────────── -->
+<script>
+/* ── Constants ─────────────────────────────────────────────────────────── */
+const PARA_C = {
+  Projects:  { bg:'#1d4ed8', border:'#3b82f6', hover:'#60a5fa' },
+  Areas:     { bg:'#065f46', border:'#10b981', hover:'#34d399' },
+  Resources: { bg:'#5b21b6', border:'#8b5cf6', hover:'#a78bfa' },
+  Archives:  { bg:'#334155', border:'#64748b', hover:'#94a3b8' },
+  _:         { bg:'#0c4a6e', border:'#0ea5e9', hover:'#38bdf8' },
+};
+
+/* ── State ──────────────────────────────────────────────────────────────── */
+let network = null;
+let physicsOn = true;
+let nodesMap = new Map();   // id → raw node object
+let degreeMap = new Map();  // id → {in,out,total}
+
+/* ── Fetch graph.json ────────────────────────────────────────────────────── */
+// Try data/graph.json (relative to static/ folder → ../data/graph.json)
+// Also try graph.json for Streamlit inline-injection compatibility.
+const URLS = ['../data/graph.json', 'data/graph.json', 'graph.json'];
+
+async function loadGraph() {
+  let data = null;
+  // Support Streamlit inline injection
+  if (typeof __INLINE_GRAPH_DATA__ !== 'undefined') {
+    data = __INLINE_GRAPH_DATA__;
+  } else {
+    for (const url of URLS) {
+      try {
+        const r = await fetch(url);
+        if (r.ok) { data = await r.json(); break; }
+      } catch (_) {}
+    }
+  }
+  if (!data) {
+    document.getElementById('detail').innerHTML =
+      `<div class="empty-hint" style="color:#f43f5e">
+        ⚠ Could not load <code>graph.json</code>.<br><br>
+        <small>Run <code>python build_graph.py</code>, then:<br>
+        <code>python -m http.server 8000</code><br>
+        and open <code>http://localhost:8000/static/graph.html</code></small>
+      </div>`;
+    return;
+  }
+  init(data);
+}
+
+/* ── Initialise vis-network ──────────────────────────────────────────────── */
+function init({ nodes, edges, metadata }) {
+  // Stats
+  document.getElementById('stat-n').textContent = metadata?.node_count ?? nodes.length;
+  document.getElementById('stat-e').textContent = metadata?.edge_count ?? edges.length;
+  if (metadata?.generated_at) {
+    const d = new Date(metadata.generated_at);
+    document.getElementById('footer').textContent =
+      `Built ${d.toLocaleString()} · ${metadata.node_count} notes`;
+  }
+
+  // Degree map
+  edges.forEach(e => {
+    if (!degreeMap.has(e.source)) degreeMap.set(e.source, {in:0,out:0});
+    if (!degreeMap.has(e.target)) degreeMap.set(e.target, {in:0,out:0});
+    degreeMap.get(e.source).out++;
+    degreeMap.get(e.target).in++;
+  });
+  degreeMap.forEach((v,k) => v.total = v.in + v.out);
+
+  // Build DataSets
+  const visNodes = new vis.DataSet();
+  const visEdges = new vis.DataSet();
+
+  nodes.forEach(n => {
+    nodesMap.set(n.id, n);
+    const c   = PARA_C[n.para] ?? PARA_C._;
+    const deg = degreeMap.get(n.id)?.total ?? 0;
+    const sz  = Math.min(14 + Math.log1p(deg) * 5, 36);
+
+    const tip = [
+      `<b>${esc(n.label)}</b>`,
+      n.para ? `<span style="opacity:.55">${esc(n.para)}</span>` : '',
+      n.summary ? `<br>${esc(n.summary)}` : '',
+      n.content_preview ? `<br><i>${esc(n.content_preview.slice(0,120))}…</i>` : '',
+      (n.tags||[]).length ? `<br><small>${n.tags.map(t=>'#'+esc(t)).join(' ')}</small>` : '',
+    ].filter(Boolean).join('');
+
+    visNodes.add({
+      id: n.id, label: n.label, shape: 'dot', size: sz,
+      color: {
+        background: c.bg, border: c.border,
+        highlight: { background:'#881337', border:'#f43f5e' },
+        hover:     { background: c.hover, border:'#fff' },
+      },
+      font: { color:'#ddeeff', size:11, face:'Inter', strokeWidth:2, strokeColor:'rgba(0,0,0,0.65)' },
+      title: tip,
+      _para: n.para,
+    });
+  });
+
+  edges.forEach(e => {
+    visEdges.add({
+      from: e.source, to: e.target,
+      color: { color:'rgba(80,110,160,0.2)', highlight:'rgba(244,63,94,0.65)', hover:'rgba(56,189,248,0.5)' },
+      arrows: { to: { enabled: true, scaleFactor: 0.45 } },
+      smooth: { type:'continuous', roundness:0.15 },
+      width: 0.8, hoverWidth: 1.8,
+    });
+  });
+
+  // Physics: Barnes-Hut as specified in plan §3.2.2
+  const options = {
+    interaction: { hover:true, tooltipDelay:80, zoomView:true, dragView:true },
+    physics: {
+      enabled: true,
+      solver: 'barnesHut',
+      barnesHut: {
+        gravitationalConstant: -8000,
+        centralGravity: 0.15,
+        springLength: 150,
+        springConstant: 0.04,
+        damping: 0.09,
+        avoidOverlap: 0.1,
+      },
+      stabilization: { enabled:true, iterations:200, updateInterval:25 },
+    },
+  };
+
+  const container = document.getElementById('graph-canvas');
+  network = new vis.Network(container, { nodes:visNodes, edges:visEdges }, options);
+
+  // Auto-freeze after stabilisation
+  network.once('stabilizationIterationsDone', () => {
+    network.setOptions({ physics:{ enabled:false } });
+    physicsOn = false;
+    document.getElementById('btn-physics').textContent = '▶ Animate';
+  });
+
+  // Events
+  network.on('selectNode', p => { if (p.nodes.length) showDetail(p.nodes[0]); });
+  network.on('hoverNode',  p => showDetail(p.node));
+}
+
+/* ── Detail panel ────────────────────────────────────────────────────────── */
+function showDetail(id) {
+  const n = nodesMap.get(id);
+  if (!n) return;
+  const c   = PARA_C[n.para] ?? PARA_C._;
+  const deg = degreeMap.get(id) ?? {in:0, out:0, total:0};
+  const tags = (n.tags||[]).map(t=>`<span class="d-tag">#${esc(t)}</span>`).join('');
+
+  document.getElementById('detail').innerHTML = `
+    <div class="d-title">${esc(n.label)}</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+      <span class="d-badge" style="background:${c.bg}">${esc(n.para||'Note')}</span>
+      <span class="d-degree" title="Incoming / outgoing links">↙${deg.in} ↗${deg.out}</span>
+    </div>
+    ${n.summary ? `<div class="d-label">Summary</div><div class="d-body">${esc(n.summary)}</div>` : ''}
+    ${n.content_preview ? `<div class="d-label">Preview</div><div class="d-body">${esc(n.content_preview)}</div>` : ''}
+    ${tags ? `<div class="d-label">Tags</div><div class="d-tags">${tags}</div>` : ''}
+    <div class="d-label">Note ID</div>
+    <div class="d-path">${esc(n.id)}</div>
+  `;
+}
+
+/* ── Controls ────────────────────────────────────────────────────────────── */
+let _st = null;
+document.getElementById('search').addEventListener('input', function() {
+  clearTimeout(_st);
+  _st = setTimeout(() => {
+    const q = this.value.trim().toLowerCase();
+    if (!q || !network) return;
+    const hits = [];
+    nodesMap.forEach((n,id) => {
+      if (`${n.label} ${(n.tags||[]).join(' ')} ${n.summary||''}`.toLowerCase().includes(q))
+        hits.push(id);
+    });
+    if (!hits.length) return;
+    network.selectNodes(hits);
+    network.fit({ nodes: hits, animation:{ duration:400, easingFunction:'easeInOutQuad' } });
+    showDetail(hits[0]);
+  }, 200);
+});
+
+function setFilter(para) {
+  document.querySelectorAll('.f-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(para ? `f-${para}` : 'f-all').classList.add('active');
+  if (!network) return;
+  if (!para) { network.fit({ animation:true }); return; }
+  const ids = [];
+  nodesMap.forEach((n,id) => { if (n.para === para) ids.push(id); });
+  if (ids.length) network.fit({ nodes:ids, animation:{ duration:450, easingFunction:'easeInOutQuad' } });
+}
+
+function togglePhysics() {
+  if (!network) return;
+  physicsOn = !physicsOn;
+  network.setOptions({ physics:{ enabled:physicsOn } });
+  document.getElementById('btn-physics').textContent = physicsOn ? '⏸ Freeze' : '▶ Animate';
+}
+
+function resetView() {
+  if (network) { network.unselectAll(); network.fit({ animation:true }); }
+  document.getElementById('detail').innerHTML = `
+    <div class="empty-hint">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+        <circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="9"/>
+        <line x1="12" y1="3" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="21"/>
+        <line x1="3" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="21" y2="12"/>
+      </svg>
+      Hover or click a node<br>to explore connections.
+    </div>`;
+  setFilter(null);
+}
+
+/* ── Utility ─────────────────────────────────────────────────────────────── */
+function esc(s) {
+  return String(s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+/* ── Boot ────────────────────────────────────────────────────────────────── */
+loadGraph();
+</script>
+</body>
+</html>
