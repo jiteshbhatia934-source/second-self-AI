@@ -128,6 +128,8 @@ def extract_tags(content: str, max_tags: int = 5):
 def make_summary(content: str, max_len: int = 200) -> str:
     if not content:
         return ""
+    # Exclude explicit Related sections from summary generation.
+    content = re.split(r"\n##?\s*Related\b", content, flags=re.I)[0]
     s = content.strip().replace("\n", " ")
     # Take first sentence if possible
     m = re.search(r"(.*?[\.\!\?])(\s|$)", s)
@@ -135,6 +137,10 @@ def make_summary(content: str, max_len: int = 200) -> str:
         sent = m.group(1).strip()
         if len(sent) <= max_len:
             return sent
+    # Fall back to first paragraph or first line-like fragment
+    first_line = s.split("\n")[0].strip()
+    if first_line and len(first_line) <= max_len:
+        return first_line
     return s[:max_len].rstrip() + ("..." if len(s) > max_len else "")
 
 
@@ -217,14 +223,19 @@ def infer_title_from_body(body: str, fallback: str) -> str:
     return fallback
 
 
+def strip_related_section(body: str) -> str:
+    return re.sub(r"\n##?\s*Related\s*\n.*\Z", "\n", body, flags=re.S).strip() + "\n"
+
+
 def normalize_wiki_note(path: Path, para: str) -> None:
     text = path.read_text(encoding="utf-8", errors="replace")
     if has_front_matter(text):
         return
     body = text.strip() + "\n"
-    title = infer_title_from_body(body, path.stem.replace("-", " ").title())
-    summary = make_summary(body)
-    tags = extract_tags(body)
+    content_body = strip_related_section(body)
+    title = infer_title_from_body(content_body, path.stem.replace("-", " ").title())
+    summary = make_summary(content_body)
+    tags = extract_tags(content_body)
     note = {
         "id": path.stem,
         "raw_id": path.stem,
