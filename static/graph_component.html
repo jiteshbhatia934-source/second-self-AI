@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<!--
+  static/graph_component.html — SecondSelf interactive knowledge graph
+  ====================================================================
+  Sub-Phase 4.2 deliverable per docs/implementation-plan.md.
+
+  PURPOSE
+    Standalone, single-file, browser-rendered view of the wiki graph
+    produced by `build_graph.py`.  This is the visualization half of
+    Sub-Phase 4.2 (graph data is Sub-Phase 4.1).
+
+  LIBRARY CHOICE
+    vis-network 9.1.9 (MIT) — chosen over Cytoscape.js for its
+    out-of-the-box force-directed physics, drag/zoom, and tiny CDN
+    footprint.  Pinned in README.md and in this file.
+
+  DATA CONTRACT (architecture §4.3)
+    The HTML reads graph.json with this shape:
+      {
+        "meta":  {"generated_at", "note_count", "edge_count"},
+        "nodes": [{"id","label","para","tags","summary","path",
+                   "content_preview","group"}],
+        "edges": [{"source","target","type","weight"}]
+      }
+    Both `meta` and the legacy `metadata` block are accepted.
+
+  DATA INPUT
+    The component tries these sources, in order:
+      1. `__INLINE_GRAPH_DATA__` global — set by graph_component.py
+         so the same HTML works inside Streamlit's sandboxed iframe
+         (the iframe cannot fetch the file-system).
+      2. fetch("../graph.json")         — for `python -m http.server`
+      3. fetch("graph.json")            — same-dir copy
+      4. fetch("../data/graph.json")    — canonical location
+
+  STANDALONE TEST
+      python -m http.server 8000
+      # open http://localhost:8000/static/graph_component.html
+
+  STREAMLIT EMBED (used by graph_preview.py)
+      from graph_component import render_in_streamlit
+      render_in_streamlit(height=680)
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SecondSelf — Knowledge Graph</title>
+  <meta name="description"
+        content="Interactive force-directed graph of the SecondSelf second brain.">
+
+  <!-- Google Fonts — display serif + clean sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- vis-network 9.1.9 (MIT) — pinned, with SRI per edge-case UI-03 -->
+  <script src="https://unpkg.com/vis-network@9.1.9/standalone/umd/vis-network.min.js"
+          integrity="sha384-yxKDWWf0wwdUj/gPeuL11czrnKFQROnLgY8ll7En9NYoXibgg3C6NK/UDHNtUgWJ"
+          crossorigin="anonymous"></script>
+
+  <style>
+    /* ── Design tokens — "Aurora" multi-color palette ─────────────────── */
+    :root {
+      --bg:            #0a0612;
+      --bg-soft:       #120a18;
+      --bg-panel:      rgba(20, 12, 26, 0.92);
+      --bg-card:       rgba(32, 22, 42, 0.65);
+      --border:        rgba(255, 230, 200, 0.09);
+      --text:          #f5ebe0;
+      --text-strong:   #fef7ed;
+      --muted:         #b8a99b;
+      --faint:         #6b5d52;
+
+      --coral:         #ff6b6b;
+      --coral-hi:      #ff8a8a;
+      --coral-deep:    #e63946;
+      --gold:          #ffd93d;
+      --emerald:       #6bcf7f;
+      --emerald-hi:    #8ee0a0;
+      --violet:        #c780fa;
+      --violet-hi:     #d8a8ff;
+      --pink:          #ff6b9d;
+
+      --font-display:  'Fraunces', Georgia, 'Times New Roman', serif;
+      --font-body:     'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono:     'JetBrains Mono', 'SF Mono', Consolas, monospace;
+
+      --r-sm: 6px; --r-md: 10px;
+      --t: 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overflow: hidden; }
+    body {
+      font-family: var(--font-body);
+      background:
+        radial-gradient(ellipse 70% 50% at 10% 0%,
+          rgba(255, 107, 107, 0.10) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 45% at 95% 5%,
+          rgba(255, 217, 61, 0.08) 0%, transparent 55%),
+        radial-gradient(ellipse 65% 50% at 90% 95%,
+          rgba(199, 128, 250, 0.10) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 50% at 5% 90%,
+          rgba(107, 207, 127, 0.08) 0%, transparent 55%),
+        var(--bg);
+      color: var(--text);
+      display: flex; flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 0;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.96  0 0 0 0 0.92  0 0 0 0 0.85  0 0 0 1 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+      mix-blend-mode: overlay;
+    }
+    #topbar, #graph-canvas, .empty-state { position: relative; z-index: 1; }
+
+    /* ── Subtle pulse used for selected/highlighted nodes ─────────────── */
+    @keyframes ss-pulse {
+      0%, 100% { transform: scale(1);   filter: brightness(1);   }
+      50%      { transform: scale(1.18); filter: brightness(1.4); }
+    }
+    .vis-node.ss-pulse { animation: ss-pulse 1.4s ease-in-out infinite; }
+
+    /* ── Topbar ───────────────────────────────────────────────────────── */
+    #topbar {
+      display: flex; align-items: center; gap: 14px;
+      padding: 10px 18px;
+      background: var(--bg-panel);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      flex-shrink: 0; z-index: 10;
+    }
+    #topbar h1 {
+      font-family: var(--font-display);
+      font-size: 1rem; font-weight: 700;
+      letter-spacing: -0.01em;
+      background: linear-gradient(120deg,
+        var(--coral) 0%,
+        var(--gold) 28%,
+        var(--emerald) 52%,
+        var(--violet) 78%,
+        var(--pink) 100%);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: ss-shimmer 8s linear infinite;
+    }
+    @keyframes ss-shimmer {
+      0%   { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    .stat-pill {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 3px 10px; border-radius: 20px;
+      font-size: 0.7rem; color: var(--muted);
+      font-weight: 500;
+    }
+    .stat-pill b { color: var(--emerald-hi); font-weight: 600; }
+
+    .filter-row { display: flex; gap: 4px; }
+    .f-btn {
+      display: flex; align-items: center; gap: 5px;
+      padding: 4px 10px; border-radius: 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: var(--font-body);
+      font-size: 0.7rem; font-weight: 500;
+      cursor: pointer;
+      transition: background var(--t), border-color var(--t), color var(--t);
+    }
+    .f-btn:hover {
+      background: var(--bg-card);
+      border-color: var(--violet);
+      color: var(--violet-hi);
+    }
+    .f-btn.active {
+      background: var(--bg-card);
+      border-color: var(--emerald);
+      color: var(--emerald-hi);
+      box-shadow: 0 0 12px rgba(107, 207, 127, 0.3);
+    }
+    .f-dot { width: 7px; height: 7px; border-radius: 50%; }
+
+    /* ── Graph area — multi-color mesh (not blue) ─────────────────────── */
+    #graph-canvas {
+      flex: 1; min-height: 0;
+      background:
+        radial-gradient(ellipse 70% 55% at 30% 30%,
+          rgba(255, 107, 107, 0.10) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 75% 75%,
+          rgba(199, 128, 250, 0.10) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 40% at 85% 20%,
+          rgba(255, 217, 61, 0.06) 0%, transparent 50%),
+        radial-gradient(ellipse 40% 35% at 15% 85%,
+          rgba(107, 207, 127, 0.08) 0%, transparent 55%),
+        var(--bg);
+    }
+
+    /* ── Empty/error state ────────────────────────────────────────────── */
+    .empty-state {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      pointer-events: none; color: var(--faint); text-align: center;
+    }
+    .empty-state .box {
+      pointer-events: auto;
+      max-width: 480px; padding: 24px 28px;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .empty-state h2 {
+      color: var(--coral);
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .empty-state code {
+      background: rgba(0, 0, 0, 0.4);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--gold);
+      font-size: 0.9em;
+      font-family: var(--font-mono);
+    }
+    .empty-state p { font-size: 0.88rem; line-height: 1.55; color: var(--muted); }
+
+    /* ── vis-network tooltip overrides ────────────────────────────────── */
+    .vis-tooltip {
+      background: rgba(10, 6, 18, 0.96) !important;
+      border: 1px solid var(--violet) !important;
+      color: var(--text) !important;
+      font-family: var(--font-body) !important;
+      font-size: 0.78rem !important;
+      padding: 8px 12px !important;
+      border-radius: 8px !important;
+      max-width: 280px !important;
+      line-height: 1.5 !important;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7),
+                  0 0 18px rgba(199, 128, 250, 0.25) !important;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Topbar ────────────────────────────────────────────────────────── -->
+<header id="topbar">
+  <h1>⬡ SecondSelf Brain</h1>
+  <div class="stat-pill">Nodes <b id="stat-n">—</b></div>
+  <div class="stat-pill">Edges <b id="stat-e">—</b></div>
+
+  <div class="filter-row" role="group" aria-label="Filter by PARA">
+    <button class="f-btn active" data-para="">All</button>
+    <button class="f-btn" data-para="Projects">
+      <span class="f-dot" style="background:#ff6b6b"></span>Projects
+    </button>
+    <button class="f-btn" data-para="Areas">
+      <span class="f-dot" style="background:#6bcf7f"></span>Areas
+    </button>
+    <button class="f-btn" data-para="Resources">
+      <span class="f-dot" style="background:#ffd93d"></span>Resources
+    </button>
+    <button class="f-btn" data-para="Archives">
+      <span class="f-dot" style="background:#d6d3d1"></span>Archives
+    </button>
+  </div>
+
+  <button class="f-btn" id="btn-physics" style="margin-left:auto">⏸ Freeze</button>
+</header>
+
+<!-- ── Inline data marker (filled by graph_component.py) ──────────────── -->
+<!-- __INLINE_GRAPH_DATA__ -->
+
+<!-- ── Graph canvas ──────────────────────────────────────────────────── -->
+<div id="graph-canvas"></div>
+<div class="empty-state" id="empty-state" hidden></div>
+
+
+<!-- ── Script ────────────────────────────────────────────────────────── -->
+<script>
+/* ── Constants ─────────────────────────────────────────────────────── */
+// "Aurora" multi-color palette — vibrant hues per PARA category.
+const PARA_COLOR = {
+  Projects:  { bg: '#b91c1c', border: '#ff6b6b', hover: '#ff8a8a' },
+  Areas:     { bg: '#047857', border: '#6bcf7f', hover: '#8ee0a0' },
+  Resources: { bg: '#a16207', border: '#ffd93d', hover: '#ffe766' },
+  Archives:  { bg: '#57534e', border: '#d6d3d1', hover: '#f5f5f4' },
+  _default:  { bg: '#7c2d12', border: '#fb923c', hover: '#fdba74' },
+};
+
+/* ── State ──────────────────────────────────────────────────────────── */
+let network    = null;     // vis.Network instance
+let physicsOn  = true;     // toggled by the Freeze button
+let nodesById  = new Map();// id → raw node object
+
+/* ── Utilities ──────────────────────────────────────────────────────── */
+function esc(s) {
+  return String(s ?? '')
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+function showEmpty(title, body) {
+  const el = document.getElementById('empty-state');
+  el.innerHTML = `<div class="box"><h2>${esc(title)}</h2><p>${body}</p></div>`;
+  el.hidden = false;
+}
+
+/* ── Data loading ───────────────────────────────────────────────────── */
+async function loadGraph() {
+  // 1. Inline injection (Streamlit sandbox)
+  if (typeof __INLINE_GRAPH_DATA__ !== 'undefined' && __INLINE_GRAPH_DATA__) {
+    return init(__INLINE_GRAPH_DATA__);
+  }
+  // 2. Try several relative URLs (standalone server)
+  const urls = [
+    '../graph.json',
+    'graph.json',
+    '../data/graph.json',
+    'data/graph.json',
+  ];
+  for (const url of urls) {
+    try {
+      const r = await fetch(url, { cache: 'no-store' });
+      if (r.ok) return init(await r.json());
+    } catch (_) { /* try next */ }
+  }
+  // 3. Nothing worked — show instructions
+  showEmpty(
+    'graph.json not found',
+    `Run <code>python build_graph.py</code> from the project root, then<br>
+     <code>python -m http.server 8000</code> and open<br>
+     <code>http://localhost:8000/static/graph_component.html</code>.`
+  );
+}
+
+/* ── Initialise vis-network ─────────────────────────────────────────── */
+function init(data) {
+  const nodes  = Array.isArray(data.nodes) ? data.nodes : [];
+  const edges  = Array.isArray(data.edges) ? data.edges : [];
+  const meta   = data.meta || data.metadata || {};
+
+  if (!nodes.length) {
+    showEmpty(
+      'Empty graph',
+      `The wiki is empty. Capture a note with <code>python capture.py note "…"</code>, `
+      + `then run <code>python classify.py</code>, <code>python link.py</code>, `
+      + `and finally <code>python build_graph.py</code>.`
+    );
+    document.getElementById('stat-n').textContent = '0';
+    document.getElementById('stat-e').textContent = '0';
+    return;
+  }
+
+  // Stats
+  const noteCount = meta.note_count ?? meta.node_count ?? nodes.length;
+  const edgeCount = meta.edge_count ?? edges.length;
+  document.getElementById('stat-n').textContent = noteCount;
+  document.getElementById('stat-e').textContent = edgeCount;
+
+  // Build datasets
+  const visNodes = new vis.DataSet();
+  const visEdges = new vis.DataSet();
+
+  // Degree map → used to size nodes
+  const degree = new Map();
+  for (const e of edges) {
+    degree.set(e.source, (degree.get(e.source) || 0) + 1);
+    degree.set(e.target, (degree.get(e.target) || 0) + 1);
+  }
+
+  for (const n of nodes) {
+    nodesById.set(n.id, n);
+    const c      = PARA_COLOR[n.para] || PARA_COLOR._default;
+    const deg    = degree.get(n.id) || 0;
+    const size   = Math.min(10 + Math.log1p(deg) * 5, 30);
+
+    // Hover tooltip — title, summary, body preview, tags (all escaped)
+    const tipParts = [
+      `<b>${esc(n.label || n.id)}</b>`,
+      n.para ? `<span style="opacity:.6">${esc(n.para)}</span>` : '',
+      n.summary ? `<br>${esc(n.summary)}` : '',
+      n.content_preview ? `<br><i>${esc(String(n.content_preview).slice(0, 140))}…</i>` : '',
+      (n.tags || []).length ? `<br><small>${n.tags.map(t => '#' + esc(t)).join(' ')}</small>` : '',
+    ].filter(Boolean);
+    const title = tipParts.join('');
+
+    visNodes.add({
+      id: n.id,
+      label: n.label || n.id,
+      shape: 'dot',
+      size,
+      color: {
+        background: c.bg,
+        border: c.border,
+        highlight: { background: '#fbbf24', border: '#ff6b9d' },
+        hover:     { background: c.hover, border: '#fef7ed' },
+      },
+      font: {
+        color: '#f5ebe0', size: 11,
+        face: 'Inter, -apple-system, sans-serif',
+        strokeWidth: 2, strokeColor: 'rgba(10, 6, 18, 0.85)',
+      },
+      title,                       // vis-native tooltip
+      group: n.para || undefined,
+    });
+  }
+
+  for (const e of edges) {
+    if (!nodesById.has(e.source) || !nodesById.has(e.target)) continue;
+    if (e.source === e.target) continue; // skip self-loops
+    const isSim = (e.type === 'similarity');
+    visEdges.add({
+      from: e.source,
+      to:   e.target,
+      arrows: { to: { enabled: !isSim, scaleFactor: 0.4 } },  // similarity is undirected
+      color: isSim
+        ? { color: 'rgba(199, 128, 250, 0.30)', highlight: 'rgba(199, 128, 250, 0.85)' }
+        : { color: 'rgba(255, 217, 61, 0.32)',   highlight: 'rgba(255, 107, 107, 0.85)'  },
+      width: isSim ? 0.6 : 0.9,
+      smooth: { type: 'continuous', roundness: 0.15 },
+    });
+  }
+
+  // Physics — Barnes-Hut force-directed (plan §5.5)
+  const options = {
+    interaction: {
+      hover: true, hoverConnectedEdges: true,
+      tooltipDelay: 80,
+      zoomView: true, dragView: true,
+      dragNodes: true,
+    },
+    physics: {
+      enabled: true,
+      solver: 'barnesHut',
+      barnesHut: {
+        gravitationalConstant: -8000,
+        centralGravity: 0.15,
+        springLength: 150,
+        springConstant: 0.04,
+        damping: 0.09,
+        avoidOverlap: 0.1,
+      },
+      stabilization: { enabled: true, iterations: 200, updateInterval: 25 },
+    },
+  };
+
+  network = new vis.Network(
+    document.getElementById('graph-canvas'),
+    { nodes: visNodes, edges: visEdges },
+    options,
+  );
+
+  // Auto-freeze after stabilisation for a calmer view
+  network.once('stabilizationIterationsDone', () => {
+    network.setOptions({ physics: { enabled: false } });
+    physicsOn = false;
+    document.getElementById('btn-physics').textContent = '▶ Animate';
+  });
+
+  // Brief pulse on a freshly selected node
+  network.on('selectNode', params => {
+    const id = params.nodes[0];
+    if (!id) return;
+    const node = visNodes.get(id);
+    visNodes.update({ id, className: (node.className || '') + ' ss-pulse' });
+    setTimeout(() => visNodes.update({ id, className: (node.className || '').replace(' ss-pulse', '') }), 1400);
+  });
+}
+
+/* ── Controls ───────────────────────────────────────────────────────── */
+document.querySelectorAll('.f-btn[data-para]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.f-btn[data-para]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const para = btn.dataset.para;
+    if (!network) return;
+    if (!para) { network.fit({ animation: true }); return; }
+    const ids = [];
+    nodesById.forEach((n, id) => { if (n.para === para) ids.push(id); });
+    if (ids.length) {
+      network.selectNodes(ids);
+      network.fit({ nodes: ids, animation: { duration: 450, easingFunction: 'easeInOutQuad' } });
+    }
+  });
+});
+
+document.getElementById('btn-physics').addEventListener('click', () => {
+  if (!network) return;
+  physicsOn = !physicsOn;
+  network.setOptions({ physics: { enabled: physicsOn } });
+  document.getElementById('btn-physics').textContent = physicsOn ? '⏸ Freeze' : '▶ Animate';
+});
+
+/* ── Boot ───────────────────────────────────────────────────────────── */
+loadGraph();
+</script>
+</body>
+</html>

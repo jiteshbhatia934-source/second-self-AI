@@ -1,0 +1,16 @@
+schema_version: 1
+module_path: cli_scripts
+title: CLI Pipeline & Interactive Tools
+scope:
+    - pipeline.py
+    - classify.py
+    - link.py
+    - build_graph.py
+    - capture.py
+    - ask.py
+    - graph_preview.py
+source_files: []
+depends_on: []
+related_to:
+    - path: docs
+    - path: lib_core

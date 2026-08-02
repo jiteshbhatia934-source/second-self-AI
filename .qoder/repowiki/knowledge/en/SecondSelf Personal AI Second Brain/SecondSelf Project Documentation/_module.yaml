@@ -1,0 +1,10 @@
+schema_version: 1
+module_path: docs
+title: SecondSelf Project Documentation
+scope:
+    - docs/
+source_files: []
+depends_on: []
+related_to:
+    - path: cli_scripts
+    - path: lib_core

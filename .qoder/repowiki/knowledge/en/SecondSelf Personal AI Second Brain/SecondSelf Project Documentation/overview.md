@@ -1,0 +1,1 @@
+Design and planning documents for SecondSelf, a Python-based personal AI second brain that captures notes, auto-classifies via PARA embeddings, renders an interactive graph, and answers questions with RAG over a deployed Streamlit app.

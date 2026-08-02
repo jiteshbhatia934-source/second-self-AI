@@ -62,17 +62,38 @@ capture → raw/ → classify → wiki/ → link → graph.json → graph previe
 
 ## Graph preview
 
-Once you have built `data/graph.json`, open the local graph viewer with:
+The interactive knowledge graph is the Sub-Phase 4.2 deliverable.  Once you have built `graph.json`, render the brain with:
 
 ```powershell
 python build_graph.py
 streamlit run graph_preview.py
 ```
 
-The preview uses `static/graph.html` and `data/graph.json` to render an interactive force-directed graph with hover tooltips, drag/zoom, PARA filters, and note details.
+`graph_preview.py` is a minimal Streamlit stub that only shows the graph; all data loading and HTML inlining live in `graph_component.py`, and the rendered component itself is `static/graph_component.html`.
 
-The implementation plan lists the commands as each stage is introduced.
+### Library choice
 
-## Privacy
+The graph uses **[vis-network 9.1.9](https://visjs.github.io/vis-network/)** (MIT) loaded from `unpkg` with Subresource Integrity (SRI) and pinned in the HTML, per architecture §5.5 and edge-case UI-03.  Cytoscape.js was the alternative considered; vis-network was chosen for its zero-config Barnes–Hut force-directed physics, tiny CDN footprint, and clean `st.components.v1.html` embed story.
+
+### Standalone test
+
+You can also open the graph directly in a browser without Streamlit:
+
+```powershell
+python -m http.server 8000
+# open http://localhost:8000/static/graph_component.html
+```
+
+In standalone mode the page `fetch()`es `graph.json`; in the Streamlit sandbox `graph_component.py` inlines the data as `__INLINE_GRAPH_DATA__` because the iframe cannot read the local file-system.
+
+### Features
+
+- Force-directed physics (Barnes–Hut) with auto-freeze after stabilisation and a manual Freeze/Animate toggle.
+- Hover tooltip with title, PARA category, summary, body preview, and tags (all HTML-escaped — see edge-case UI-02).
+- Drag nodes, zoom, pan, and select a node to focus it (with a brief pulse).
+- Filter chips for each PARA category; the Empty Graph state explains how to populate the brain.
+- Tolerates missing or empty `graph.json` with a friendly in-app message (edge-case UI-01).
+
+### Privacy
 
 Raw captures and wiki notes can contain personal information. Keep them private by default. Before any public deployment, use a sanitized demo dataset and never commit `.env` or API keys.

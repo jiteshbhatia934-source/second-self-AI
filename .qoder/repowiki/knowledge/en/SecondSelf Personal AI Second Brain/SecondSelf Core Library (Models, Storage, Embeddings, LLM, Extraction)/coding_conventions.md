@@ -1,0 +1,5 @@
+- All shared data structures are plain `@dataclass` objects with `field(default_factory=...)` for mutable collections, keeping models free of external dependencies.
+- Optional heavy third-party libraries are imported lazily inside functions (not at module top) so the package stays importable without them, with explicit error messages guiding installation.
+- Filesystem paths are resolved through helper functions that try importing a `config` module first and fall back to project-root relative defaults (`raw/`, `wiki/`, `data/`).
+- Disk writes use an atomic tmp-file-then-replace pattern (`.tmp` suffix then `Path.replace`) to prevent partial writes on `index.json`, `embeddings.pkl`, and wiki note files.
+- Each public function is documented with a short docstring listing its inputs, outputs, and behavior, and the module-level docstring enumerates the exported API surface.

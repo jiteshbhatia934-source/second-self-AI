@@ -1,0 +1,1 @@
+Install via `python -m pip install -r requirements.txt`, copy `.env.example` to `.env` and set `GROQ_API_KEY`. Run the full pipeline through CLI commands defined in `cli_scripts`; after building `data/graph.json`, launch the graph viewer with `streamlit run graph_preview.py`.

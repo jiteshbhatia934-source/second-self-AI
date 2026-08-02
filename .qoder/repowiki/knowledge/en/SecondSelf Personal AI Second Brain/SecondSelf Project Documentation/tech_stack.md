@@ -1,0 +1,1 @@
+Python 3.10+ with Groq/Llama 3 for LLM calls, sentence-transformers (all-MiniLM-L6-v2) for local embeddings, Streamlit for the web UI, vis-network or Cytoscape.js for the force-directed graph, PyYAML + python-frontmatter for Markdown front matter, numpy for cosine similarity, and httpx for optional URL fetching. Deployment targets Streamlit Community Cloud or Hugging Face Spaces.

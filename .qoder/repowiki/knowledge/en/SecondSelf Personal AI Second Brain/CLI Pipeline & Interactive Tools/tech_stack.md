@@ -1,0 +1,1 @@
+Python 3 with `typer` for CLI commands, `numpy` for vector math, optional `httpx` for URL title fetching, optional `groq` client for AI classification, `streamlit` + `streamlit.components.v1` for the interactive preview, and vis-network via the static `graph.html`. Front-matter parsing is hand-rolled (no PyYAML dependency).

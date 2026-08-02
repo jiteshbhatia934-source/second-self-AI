@@ -1,0 +1,6 @@
+- Each module exposes a `main()` function and is runnable via `if __name__ == "__main__": main()`, enabling both direct execution and programmatic import.
+- Modules lazily import heavy dependencies (e.g., `import groq`, `import httpx`, `import streamlit`) inside functions so the scripts remain usable when optional packages are missing.
+- Filesystem paths are resolved through the shared `config` module (`config.WIKI_DIR`, `config.RAW_DIR`, `config.GRAPH_PATH`) and project layout is ensured via `config.ensure_project_dirs()` at startup.
+- Markdown files use YAML front matter delimited by `---` lines, parsed by a simple regex-based parser rather than a YAML library, and written manually to avoid external dependencies.
+- Errors during file I/O and parsing are caught per-item with `try/except` blocks that log to stderr and continue processing remaining items rather than aborting.
+- Output files are written atomically using a temporary file plus `Path.replace()` (seen in `build_graph.py`) to prevent partial reads by consumers.
