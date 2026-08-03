@@ -113,4 +113,6 @@ def ensure_project_dirs() -> None:
 
 
 def groq_configured() -> bool:
-    return bool(GROQ_API_KEY)
+    _apply_streamlit_secrets()
+    return bool(os.getenv("GROQ_API_KEY", "").strip())
+

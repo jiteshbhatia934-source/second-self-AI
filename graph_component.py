@@ -66,6 +66,13 @@ def load_graph_data(graph_path: Path | None = None) -> dict[str, Any]:
     empty: dict[str, Any] = {"meta": {"note_count": 0, "edge_count": 0}, "nodes": [], "edges": []}
 
     if not path.exists():
+        try:
+            from build_graph import build_graph
+            generated = build_graph(output_path=path)
+            if generated and generated.get("nodes"):
+                return generated
+        except Exception:
+            pass
         return empty
     try:
         text = path.read_text(encoding="utf-8")
@@ -82,6 +89,16 @@ def load_graph_data(graph_path: Path | None = None) -> dict[str, Any]:
         data["meta"] = data["metadata"]
     data.setdefault("nodes", [])
     data.setdefault("edges", [])
+
+    if not data["nodes"]:
+        try:
+            from build_graph import build_graph
+            generated = build_graph(output_path=path)
+            if generated and generated.get("nodes"):
+                return generated
+        except Exception:
+            pass
+
     data["meta"].setdefault("note_count", len(data["nodes"]))
     data["meta"].setdefault("edge_count", len(data["edges"]))
     return data

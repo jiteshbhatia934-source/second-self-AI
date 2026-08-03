@@ -33,6 +33,13 @@ def _get_client():
     except ImportError as exc:
         raise ImportError("groq package not installed. Run: pip install groq") from exc
 
+    try:
+        import streamlit as st  # type: ignore
+        if "GROQ_API_KEY" in st.secrets and not os.getenv("GROQ_API_KEY"):
+            os.environ["GROQ_API_KEY"] = str(st.secrets["GROQ_API_KEY"])
+    except Exception:
+        pass
+
     api_key = os.getenv("GROQ_API_KEY", "").strip()
     if not api_key:
         # Try loading from .env
@@ -44,7 +51,7 @@ def _get_client():
             pass
     if not api_key:
         raise EnvironmentError(
-            "GROQ_API_KEY is not set. Add it to your .env file or environment."
+            "GROQ_API_KEY is not set. Add it to your .env file or Streamlit secrets."
         )
     return Groq(api_key=api_key)
 

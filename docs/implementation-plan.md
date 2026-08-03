@@ -70,10 +70,10 @@ flowchart LR
 
 ### Acceptance criteria
 
-- [ ] Folders exist: `raw/`, `wiki/{Projects,Areas,Resources,Archives}/`, `data/`
-- [ ] `config.py` reads env with documented defaults
-- [ ] `pip install -r requirements.txt` succeeds on Python 3.10+
-- [ ] `.env` is gitignored; `.env.example` is committed
+- [x] Folders exist: `raw/`, `wiki/{Projects,Areas,Resources,Archives}/`, `data/`
+- [x] `config.py` reads env with documented defaults
+- [x] `pip install -r requirements.txt` succeeds on Python 3.10+
+- [x] `.env` is gitignored; `.env.example` is committed
 
 ### Outputs
 
@@ -110,10 +110,10 @@ dir raw   # or ls raw/
 
 ### Acceptance criteria
 
-- [ ] `raw/` and `wiki/` folder structure exists
-- [ ] One command captures note, link, AND file
-- [ ] Every capture has timestamp + unique ID
-- [ ] 10+ real items in `raw/` (not test lorem ipsum)
+- [x] `raw/` and `wiki/` folder structure exists
+- [x] One command captures note, link, AND file
+- [x] Every capture has timestamp + unique ID
+- [x] 10+ real items in `raw/` (not test lorem ipsum)
 
 ### Outputs
 
@@ -156,9 +156,9 @@ python classify.py --force   # optional re-run
 
 ### Acceptance criteria
 
-- [ ] Any raw capture → category + tags + summary automatically
-- [ ] PARA categorization working (files land under correct subfolder)
-- [ ] Idempotent re-run does not duplicate notes (unless `--force`)
+- [x] Any raw capture → category + tags + summary automatically
+- [x] PARA categorization working (files land under correct subfolder)
+- [x] Idempotent re-run does not duplicate notes (unless `--force`)
 
 ### Outputs
 
@@ -197,9 +197,9 @@ Tune threshold on real data if graph is too dense or too sparse.
 
 ### Acceptance criteria
 
-- [ ] Embeddings computed per note
-- [ ] Related notes auto-linked (no manual tagging)
-- [ ] 15+ real items → organized `wiki/` with visible cross-links
+- [x] Embeddings computed per note
+- [x] Related notes auto-linked (no manual tagging)
+- [x] 15+ real items → organized `wiki/` with visible cross-links
 
 ### Outputs
 
@@ -247,11 +247,11 @@ streamlit run graph_preview.py   # optional thin preview script, merged into app
 
 ### Acceptance criteria
 
-- [ ] Script builds nodes + edges and exports clean JSON
-- [ ] Interactive force-directed graph renders from that JSON
-- [ ] Hover reveals note content
-- [ ] Drag + zoom work
-- [ ] Built from your real notes, not dummy data
+- [x] Script builds nodes + edges and exports clean JSON
+- [x] Interactive force-directed graph renders from that JSON
+- [x] Hover reveals note content
+- [x] Drag + zoom work
+- [x] Built from your real notes, not dummy data
 
 ### Outputs
 
@@ -300,9 +300,9 @@ streamlit run app.py
 
 ### Acceptance criteria
 
-- [ ] `ask()` returns answers synthesized from your own notes (retrieval + LLM)
-- [ ] One Streamlit app contains both graph and search bar
-- [ ] Graph and ask work together locally
+- [x] `ask()` returns answers synthesized from your own notes (retrieval + LLM)
+- [x] One Streamlit app contains both graph and search bar
+- [x] Graph and ask work together locally
 
 ### Outputs
 
@@ -343,9 +343,9 @@ pytest tests/   # if added
 
 ### Acceptance criteria
 
-- [ ] Full script chain completes without errors on current `raw/` + `wiki/`
-- [ ] App reflects latest graph after rebuild
-- [ ] Ask returns sensible answers for questions you know are in your brain
+- [x] Full script chain completes without errors on current `raw/` + `wiki/`
+- [x] App reflects latest graph after rebuild
+- [x] Ask returns sensible answers for questions you know are in your brain
 
 ### Outputs
 
@@ -367,33 +367,33 @@ capture → classify → link → build_graph → streamlit app → ask
 
 **Week 1 / Phase 1**
 
-- [ ] raw/ and wiki/ exist
-- [ ] Note, link, file capture
-- [ ] Timestamp + unique ID on every capture
-- [ ] 10+ real raw items
+- [x] raw/ and wiki/ exist
+- [x] Note, link, file capture
+- [x] Timestamp + unique ID on every capture
+- [x] 10+ real raw items
 
 **Week 2 / Phases 2–3**
 
-- [ ] Auto category, tags, summary
-- [ ] PARA working
-- [ ] Embeddings per note
-- [ ] Auto-linked related notes
-- [ ] 15+ items in organized wiki/
+- [x] Auto category, tags, summary
+- [x] PARA working
+- [x] Embeddings per note
+- [x] Auto-linked related notes
+- [x] 15+ items in organized wiki/
 
 **Week 3 / Phase 4**
 
-- [ ] graph.json valid
-- [ ] Interactive graph: hover, drag, zoom
-- [ ] Real notes only
+- [x] graph.json valid
+- [x] Interactive graph: hover, drag, zoom
+- [x] Real notes only
 
 **Week 4 / Phase 5 (local)**
 
-- [ ] ask() RAG works on real questions
-- [ ] Single app: graph + ask
+- [x] ask() RAG works on real questions
+- [x] Single app: graph + ask
 
 **Architecture §16**
 
-- [ ] End-to-end flow verified locally
+- [x] End-to-end flow verified locally
 
 ### Outputs
 
@@ -422,9 +422,9 @@ capture → classify → link → build_graph → streamlit app → ask
 
 ### Acceptance criteria
 
-- [ ] Deployed live with public URL
-- [ ] Graph visible on public app
-- [ ] Ask works on public app (with API key in secrets)
+- [x] Deployed live with public URL
+- [x] Graph visible on public app
+- [x] Ask works on public app (with API key in secrets)
 
 ### Outputs
 
@@ -439,8 +439,8 @@ capture → classify → link → build_graph → streamlit app → ask
 ### Tasks
 
 1. **Production E2E** on deployed app:
-   - [ ] Interactive graph + ask-your-brain both working
-   - [ ] Full pipeline story documented (capture locally → refresh data → redeploy or committed graph update)
+   - [x] Interactive graph + ask-your-brain both working
+   - [x] Full pipeline story documented (capture locally → refresh data → redeploy or committed graph update)
 2. **README.md** (complete):
    - Problem statement (short)
    - Architecture link
@@ -454,10 +454,10 @@ capture → classify → link → build_graph → streamlit app → ask
 
 ### Final deliverables checklist
 
-- [ ] Public GitHub repo with clean README + setup instructions
-- [ ] Live deployed URL — graph + ask working
-- [ ] E2E verified: capture → classify → link → graph → ask
-- [ ] All 4 weekly milestones complete
+- [x] Public GitHub repo with clean README + setup instructions
+- [x] Live deployed URL — graph + ask working
+- [x] E2E verified: capture → classify → link → graph → ask
+- [x] All 4 weekly milestones complete
 
 **Badge:** The Oracle — *Ship SecondSelf*
 

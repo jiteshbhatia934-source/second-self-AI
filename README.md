@@ -2,9 +2,18 @@
 
 SecondSelf is a personal AI second brain. It captures notes, links, and files; organizes them into PARA-style Markdown notes; discovers related notes with local embeddings; visualizes the resulting wiki; and answers questions from those notes.
 
+## 🚀 Live Demo
+
+Experience SecondSelf live in your browser:
+**[https://second-self-ai.streamlit.app](https://second-self-ai.streamlit.app)**
+
+> [!NOTE]
+> **First-Load Delay:** On cold starts, Streamlit Community Cloud takes **1–3 minutes** to spin up the container and download the `all-MiniLM-L6-v2` embedding model (~90 MB). Subsequent requests are fast.
+
 ## Project status
 
-Phase 0 is complete: the repository structure, configuration, dependency list, and environment template are in place. The capture, classification, linking, graph, and RAG modules will be added in later phases.
+**Phase 5 Complete — Deployed to Streamlit Community Cloud!**  
+The full SecondSelf web interface (`app.py`) is live. It provides interactive knowledge graph visualization, semantic search, RAG-powered question answering ("Ask your brain"), and safe public demo mode.
 
 ## Repository layout
 
