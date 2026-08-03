@@ -1,0 +1,1530 @@
+{
+  "meta": {
+    "generated_at": "2026-08-02T06:43:10.710437+00:00",
+    "note_count": 93,
+    "edge_count": 48
+  },
+  "nodes": [
+    {
+      "id": "2e2aa653dcea4f4384d58861c249f344",
+      "label": "Archived: old meeting notes",
+      "para": "Archives",
+      "tags": [
+        "action",
+        "archived",
+        "decisions",
+        "immediate",
+        "january"
+      ],
+      "summary": "Notes from January meeting — decisions archived.",
+      "path": "wiki/Archives/archived-old-meeting-notes.md",
+      "content_preview": "Notes from January meeting — decisions archived. No immediate action required.",
+      "group": "Archives"
+    },
+    {
+      "id": "january-meeting-notes-1",
+      "label": "january-meeting-notes-1",
+      "para": "Archives",
+      "tags": [],
+      "summary": "",
+      "path": "wiki/Archives/january-meeting-notes-1.md",
+      "content_preview": "Notes from January meeting — decisions archived. No immediate action required. Related - january-meeting-notes-2 - january-meeting-notes-3 - january-meeting-notes",
+      "group": "Archives"
+    },
+    {
+      "id": "january-meeting-notes-2",
+      "label": "january-meeting-notes-2",
+      "para": "Archives",
+      "tags": [],
+      "summary": "",
+      "path": "wiki/Archives/january-meeting-notes-2.md",
+      "content_preview": "Notes from January meeting — decisions archived. No immediate action required. Related - january-meeting-notes-1 - january-meeting-notes-3 - january-meeting-notes",
+      "group": "Archives"
+    },
+    {
+      "id": "january-meeting-notes-3",
+      "label": "january-meeting-notes-3",
+      "para": "Archives",
+      "tags": [],
+      "summary": "",
+      "path": "wiki/Archives/january-meeting-notes-3.md",
+      "content_preview": "Notes from January meeting — decisions archived. No immediate action required. Related - january-meeting-notes-1 - january-meeting-notes-2 - january-meeting-notes",
+      "group": "Archives"
+    },
+    {
+      "id": "january-meeting-notes",
+      "label": "january-meeting-notes",
+      "para": "Archives",
+      "tags": [],
+      "summary": "",
+      "path": "wiki/Archives/january-meeting-notes.md",
+      "content_preview": "Notes from January meeting — decisions archived. No immediate action required. Related - january-meeting-notes-1 - january-meeting-notes-2 - january-meeting-notes-3",
+      "group": "Archives"
+    },
+    {
+      "id": "daily-health-routines-1",
+      "label": "## Daily Routines for Health",
+      "para": "Areas",
+      "tags": [
+        "daily",
+        "health",
+        "routines",
+        "consistency",
+        "hydration"
+      ],
+      "summary": "### Daily Routines for Health - Sleep schedule - Morning walk - Hydration reminders ### Responsibilities - Maintain consistency   ## Related  - [[daily-health-routines]]",
+      "path": "wiki/Areas/daily-health-routines-1.md",
+      "content_preview": "Daily Routines for Health - Sleep schedule - Morning walk - Hydration reminders Responsibilities - Maintain consistency Related - daily-health-routines",
+      "group": "Areas"
+    },
+    {
+      "id": "daily-health-routines-2",
+      "label": "## Daily Routines for Health",
+      "para": "Areas",
+      "tags": [
+        "daily",
+        "health",
+        "routines",
+        "consistency",
+        "hydration"
+      ],
+      "summary": "### Daily Routines for Health - Sleep schedule - Morning walk - Hydration reminders ### Responsibilities Maintain consistency   ## Related  - [[daily-health-routines-3]]",
+      "path": "wiki/Areas/daily-health-routines-2.md",
+      "content_preview": "Daily Routines for Health - Sleep schedule - Morning walk - Hydration reminders Responsibilities Maintain consistency Related - daily-health-routines-3",
+      "group": "Areas"
+    },
+    {
+      "id": "daily-health-routines-3",
+      "label": "## Daily Routines for Health",
+      "para": "Areas",
+      "tags": [
+        "daily",
+        "health",
+        "routines",
+        "consistency",
+        "hydration"
+      ],
+      "summary": "### Daily Routines for Health - Sleep schedule - Morning walk - Hydration reminders ### Responsibilities Maintain consistency   ## Related  - [[daily-health-routines-2]]",
+      "path": "wiki/Areas/daily-health-routines-3.md",
+      "content_preview": "Daily Routines for Health - Sleep schedule - Morning walk - Hydration reminders Responsibilities Maintain consistency Related - daily-health-routines-2",
+      "group": "Areas"
+    },
+    {
+      "id": "daily-health-routines",
+      "label": "## Daily Routines for Health",
+      "para": "Areas",
+      "tags": [
+        "daily",
+        "health",
+        "routines",
+        "consistency",
+        "hydration"
+      ],
+      "summary": "### Daily Routines for Health - Sleep schedule - Morning walk - Hydration reminders ### Responsibilities - Maintain consistency   ## Related  - [[daily-health-routines-1]]",
+      "path": "wiki/Areas/daily-health-routines.md",
+      "content_preview": "Daily Routines for Health - Sleep schedule - Morning walk - Hydration reminders Responsibilities - Maintain consistency Related - daily-health-routines-1",
+      "group": "Areas"
+    },
+    {
+      "id": "447266e75c8b4bf0928ad685808c25c8",
+      "label": "Reading: Deep Work summary",
+      "para": "Areas",
+      "tags": [
+        "deep",
+        "work",
+        "blocks",
+        "focus",
+        "idea"
+      ],
+      "summary": "Summary of Cal Newport's Deep Work: focus in long, uninterrupted blocks.",
+      "path": "wiki/Areas/reading-deep-work-summary.md",
+      "content_preview": "Summary of Cal Newport's Deep Work: focus in long, uninterrupted blocks. Key idea: schedule deep work sessions.",
+      "group": "Areas"
+    },
+    {
+      "id": "2d39a28c66a14c24a9065c25474884e9",
+      "label": "Weekly Review Template",
+      "para": "Areas",
+      "tags": [
+        "productivity",
+        "review",
+        "template",
+        "routine"
+      ],
+      "summary": "A weekly review template to reflect on accomplishments and plan next actions. Use this template every Friday to maintain productivity and consistency.",
+      "path": "wiki/Areas/weekly-review-template-1.md",
+      "content_preview": "Weekly review: reflect on wins, learnings, and next actions. Use this template every Friday. Related - weekly-review-template-3",
+      "group": "Areas"
+    },
+    {
+      "id": "weekly-review-template-10",
+      "label": "weekly-review-template-10",
+      "para": "Areas",
+      "tags": [],
+      "summary": "",
+      "path": "wiki/Areas/weekly-review-template-10.md",
+      "content_preview": "Weekly review: reflect on wins, learnings, and next actions. Use this template every Friday. Related - weekly-review-template-3",
+      "group": "Areas"
+    },
+    {
+      "id": "d7284cc144fc463bbaf39b32aa800f68",
+      "label": "Weekly Review Template",
+      "para": "Areas",
+      "tags": [
+        "productivity",
+        "review",
+        "template",
+        "routine"
+      ],
+      "summary": "A template for weekly review to reflect on accomplishments and plan next actions. To be used every Friday for ongoing self-improvement.",
+      "path": "wiki/Areas/weekly-review-template-11.md",
+      "content_preview": "Weekly review: reflect on wins, learnings, and next actions. Use this template every Friday.",
+      "group": "Areas"
+    },
+    {
+      "id": "17ba50ca66d347e6859183aec18219d3",
+      "label": "Weekly Review Template",
+      "para": "Areas",
+      "tags": [
+        "productivity",
+        "review",
+        "template",
+        "routine"
+      ],
+      "summary": "A weekly review template to reflect on accomplishments and plan next actions. Use this template every Friday to maintain productivity and consistency.",
+      "path": "wiki/Areas/weekly-review-template-2.md",
+      "content_preview": "Weekly Review Reflect on wins, learnings, and next actions. Use this template every Friday.",
+      "group": "Areas"
+    },
+    {
+      "id": "weekly-review-template-3",
+      "label": "weekly-review-template-3",
+      "para": "Areas",
+      "tags": [],
+      "summary": "",
+      "path": "wiki/Areas/weekly-review-template-3.md",
+      "content_preview": "Weekly review: reflect on wins, learnings, and next actions. Use this template every Friday. Related - weekly-review-template-10",
+      "group": "Areas"
+    },
+    {
+      "id": "5d4339edc182461ca0e84fbcc1b928f3",
+      "label": "Weekly Review Template",
+      "para": "Areas",
+      "tags": [
+        "productivity",
+        "review",
+        "template",
+        "routine"
+      ],
+      "summary": "A weekly review template to reflect on accomplishments and plan next actions. Utilize this template every Friday for consistent progress.",
+      "path": "wiki/Areas/weekly-review-template-4.md",
+      "content_preview": "Weekly review: reflect on wins, learnings, and next actions. Use this template every Friday.",
+      "group": "Areas"
+    },
+    {
+      "id": "weekly-review-template-5",
+      "label": "weekly-review-template-5",
+      "para": "Areas",
+      "tags": [],
+      "summary": "",
+      "path": "wiki/Areas/weekly-review-template-5.md",
+      "content_preview": "Weekly Review Reflect on wins, learnings, and next actions. Use this template every Friday. Related - weekly-review-template-6",
+      "group": "Areas"
+    },
+    {
+      "id": "weekly-review-template-6",
+      "label": "weekly-review-template-6",
+      "para": "Areas",
+      "tags": [],
+      "summary": "",
+      "path": "wiki/Areas/weekly-review-template-6.md",
+      "content_preview": "Weekly Review Reflect on wins, learnings, and next actions. Use this template every Friday. Related - weekly-review-template-5",
+      "group": "Areas"
+    },
+    {
+      "id": "aa156beb15884c0cb3614df5760f5a39",
+      "label": "Weekly Review Template",
+      "para": "Areas",
+      "tags": [
+        "productivity",
+        "review",
+        "template",
+        "routine"
+      ],
+      "summary": "A weekly review template to reflect on accomplishments, learnings, and plan next actions. Use this template every Friday to maintain productivity and consistency.",
+      "path": "wiki/Areas/weekly-review-template-7.md",
+      "content_preview": "Weekly Review Reflect on wins, learnings, and next actions. Use this template every Friday.",
+      "group": "Areas"
+    },
+    {
+      "id": "0f95a73a926e4ea89742a90d51e289ec",
+      "label": "Weekly Review Template",
+      "para": "Areas",
+      "tags": [
+        "productivity",
+        "review",
+        "template",
+        "routine"
+      ],
+      "summary": "A weekly review template to reflect on accomplishments, learnings, and plan next actions. To be used every Friday for personal growth and improvement.",
+      "path": "wiki/Areas/weekly-review-template-8.md",
+      "content_preview": "Weekly review: reflect on wins, learnings, and next actions. Use this template every Friday.",
+      "group": "Areas"
+    },
+    {
+      "id": "06a9d72f49c64dc2aa33bc9239d7e9eb",
+      "label": "Weekly Review Template",
+      "para": "Areas",
+      "tags": [
+        "productivity",
+        "review",
+        "template",
+        "routine"
+      ],
+      "summary": "A template for conducting a weekly review to reflect on accomplishments and plan next actions. This template is intended for regular use, specifically on Fridays.",
+      "path": "wiki/Areas/weekly-review-template-9.md",
+      "content_preview": "Weekly review: reflect on wins, learnings, and next actions. Use this template every Friday.",
+      "group": "Areas"
+    },
+    {
+      "id": "d75d7880082f4ae595e1230175f7a017",
+      "label": "Weekly Review Template",
+      "para": "Areas",
+      "tags": [
+        "productivity",
+        "review",
+        "template",
+        "routine"
+      ],
+      "summary": "A weekly review template to reflect on accomplishments, learnings, and plan next actions. To be used every Friday for personal growth and goal tracking.",
+      "path": "wiki/Areas/weekly-review-template.md",
+      "content_preview": "Weekly Review Reflect on wins, learnings, and next actions. Use this template every Friday.",
+      "group": "Areas"
+    },
+    {
+      "id": "1-program-ka-purpose-kya-hai-1",
+      "label": "1. Program ka Purpose kya hai?",
+      "para": "Projects",
+      "tags": [
+        "include"
+      ],
+      "summary": "1.",
+      "path": "wiki/Projects/1-program-ka-purpose-kya-hai-1.md",
+      "content_preview": "1. Program ka Purpose kya hai? Ye program ek calculator jaisa hai jisme user menu se choice karega: (1) Addition (2) Subtraction (3) Multiplication (4) Division (5) Remainder (0) Exit Aur fir do numbe",
+      "group": "Projects"
+    },
+    {
+      "id": "1-program-ka-purpose-kya-hai-2",
+      "label": "1. Program ka Purpose kya hai?",
+      "para": "Projects",
+      "tags": [
+        "include"
+      ],
+      "summary": "1.",
+      "path": "wiki/Projects/1-program-ka-purpose-kya-hai-2.md",
+      "content_preview": "1. Program ka Purpose kya hai? Ye program ek calculator jaisa hai jisme user menu se choice karega: (1) Addition (2) Subtraction (3) Multiplication (4) Division (5) Remainder (0) Exit Aur fir do numbe",
+      "group": "Projects"
+    },
+    {
+      "id": "1-program-ka-purpose-kya-hai",
+      "label": "1. Program ka Purpose kya hai?",
+      "para": "Projects",
+      "tags": [
+        "include"
+      ],
+      "summary": "1.",
+      "path": "wiki/Projects/1-program-ka-purpose-kya-hai.md",
+      "content_preview": "1. Program ka Purpose kya hai? Ye program ek calculator jaisa hai jisme user menu se choice karega: (1) Addition (2) Subtraction (3) Multiplication (4) Division (5) Remainder (0) Exit Aur fir do numbe",
+      "group": "Projects"
+    },
+    {
+      "id": "beta-launch-tasks-1",
+      "label": "- Redesign homepage",
+      "para": "Projects",
+      "tags": [
+        "beta",
+        "launch",
+        "tasks",
+        "august",
+        "blog"
+      ],
+      "summary": "- Redesign homepage - Improve load time - Add blog Milestone: Launch beta by August   ## Related  - [[beta-launch-tasks-2]] - [[beta-launch-tasks-3]] - [[beta-launch-tasks]]",
+      "path": "wiki/Projects/beta-launch-tasks-1.md",
+      "content_preview": "- Redesign homepage - Improve load time - Add blog Milestone: Launch beta by August Related - beta-launch-tasks-2 - beta-launch-tasks-3 - beta-launch-tasks",
+      "group": "Projects"
+    },
+    {
+      "id": "beta-launch-tasks-10",
+      "label": "beta-launch-tasks-10",
+      "para": "Projects",
+      "tags": [],
+      "summary": "",
+      "path": "wiki/Projects/beta-launch-tasks-10.md",
+      "content_preview": "- redesign homepage - improve load time - add blog Milestone: launch beta by Aug Related - beta-launch-tasks-4",
+      "group": "Projects"
+    },
+    {
+      "id": "bce4bab7c8ae4588bb927fd7e9378b5a",
+      "label": "beta launch tasks",
+      "para": "Projects",
+      "tags": [
+        "beta",
+        "launch",
+        "tasks",
+        "website"
+      ],
+      "summary": "Tasks to complete before launching the beta version by August, including redesigning the homepage and improving load time.",
+      "path": "wiki/Projects/beta-launch-tasks-11.md",
+      "content_preview": "- redesign homepage - improve load time - add blog Milestone: launch beta by Aug",
+      "group": "Projects"
+    },
+    {
+      "id": "beta-launch-tasks-2",
+      "label": "- Redesign homepage",
+      "para": "Projects",
+      "tags": [
+        "beta",
+        "launch",
+        "tasks",
+        "august",
+        "blog"
+      ],
+      "summary": "- Redesign homepage - Improve load time - Add blog Milestone: Launch beta by August   ## Related  - [[beta-launch-tasks-1]] - [[beta-launch-tasks-3]] - [[beta-launch-tasks]]",
+      "path": "wiki/Projects/beta-launch-tasks-2.md",
+      "content_preview": "- Redesign homepage - Improve load time - Add blog Milestone: Launch beta by August Related - beta-launch-tasks-1 - beta-launch-tasks-3 - beta-launch-tasks",
+      "group": "Projects"
+    },
+    {
+      "id": "beta-launch-tasks-3",
+      "label": "- Redesign homepage",
+      "para": "Projects",
+      "tags": [
+        "beta",
+        "launch",
+        "tasks",
+        "august",
+        "blog"
+      ],
+      "summary": "- Redesign homepage - Improve load time - Add blog Milestone: Launch beta by August   ## Related  - [[beta-launch-tasks-1]] - [[beta-launch-tasks-2]] - [[beta-launch-tasks]]",
+      "path": "wiki/Projects/beta-launch-tasks-3.md",
+      "content_preview": "- Redesign homepage - Improve load time - Add blog Milestone: Launch beta by August Related - beta-launch-tasks-1 - beta-launch-tasks-2 - beta-launch-tasks",
+      "group": "Projects"
+    },
+    {
+      "id": "beta-launch-tasks-4",
+      "label": "beta-launch-tasks-4",
+      "para": "Projects",
+      "tags": [],
+      "summary": "",
+      "path": "wiki/Projects/beta-launch-tasks-4.md",
+      "content_preview": "- redesign homepage - improve load time - add blog Milestone: launch beta by Aug Related - beta-launch-tasks-10",
+      "group": "Projects"
+    },
+    {
+      "id": "beta-launch-tasks-5",
+      "label": "beta-launch-tasks-5",
+      "para": "Projects",
+      "tags": [],
+      "summary": "",
+      "path": "wiki/Projects/beta-launch-tasks-5.md",
+      "content_preview": "- Redesign homepage - Improve load time - Add blog Milestone: Launch beta by August Related - beta-launch-tasks-6 - beta-launch-tasks-7 - beta-launch-tasks-8",
+      "group": "Projects"
+    },
+    {
+      "id": "beta-launch-tasks-6",
+      "label": "beta-launch-tasks-6",
+      "para": "Projects",
+      "tags": [],
+      "summary": "",
+      "path": "wiki/Projects/beta-launch-tasks-6.md",
+      "content_preview": "- Redesign homepage - Improve load time - Add blog Milestone: Launch beta by August Related - beta-launch-tasks-5 - beta-launch-tasks-7 - beta-launch-tasks-8",
+      "group": "Projects"
+    },
+    {
+      "id": "beta-launch-tasks-7",
+      "label": "beta-launch-tasks-7",
+      "para": "Projects",
+      "tags": [],
+      "summary": "",
+      "path": "wiki/Projects/beta-launch-tasks-7.md",
+      "content_preview": "- Redesign homepage - Improve load time - Add blog Milestone: Launch beta by August Related - beta-launch-tasks-5 - beta-launch-tasks-6 - beta-launch-tasks-8",
+      "group": "Projects"
+    },
+    {
+      "id": "beta-launch-tasks-8",
+      "label": "beta-launch-tasks-8",
+      "para": "Projects",
+      "tags": [],
+      "summary": "",
+      "path": "wiki/Projects/beta-launch-tasks-8.md",
+      "content_preview": "- Redesign homepage - Improve load time - Add blog Milestone: Launch beta by August Related - beta-launch-tasks-5 - beta-launch-tasks-6 - beta-launch-tasks-7",
+      "group": "Projects"
+    },
+    {
+      "id": "8e0a04cb569f413698543b6694ad73c5",
+      "label": "Beta Launch Tasks",
+      "para": "Projects",
+      "tags": [
+        "beta",
+        "launch",
+        "tasks",
+        "website"
+      ],
+      "summary": "Tasks to complete before launching the beta version by August, including redesigning the homepage and improving load time.",
+      "path": "wiki/Projects/beta-launch-tasks-9.md",
+      "content_preview": "- Redesign homepage - Improve load time - Add blog Milestone: Launch beta by August",
+      "group": "Projects"
+    },
+    {
+      "id": "beta-launch-tasks",
+      "label": "- Redesign homepage",
+      "para": "Projects",
+      "tags": [
+        "beta",
+        "launch",
+        "tasks",
+        "august",
+        "blog"
+      ],
+      "summary": "- Redesign homepage - Improve load time - Add blog Milestone: Launch beta by August   ## Related  - [[beta-launch-tasks-1]] - [[beta-launch-tasks-2]] - [[beta-launch-tasks-3]]",
+      "path": "wiki/Projects/beta-launch-tasks.md",
+      "content_preview": "- Redesign homepage - Improve load time - Add blog Milestone: Launch beta by August Related - beta-launch-tasks-1 - beta-launch-tasks-2 - beta-launch-tasks-3",
+      "group": "Projects"
+    },
+    {
+      "id": "1b14016c99424c6080e3ee45a52073ad",
+      "label": "Project: Personal Website Redesign",
+      "para": "Projects",
+      "tags": [
+        "beta",
+        "blog",
+        "homepage",
+        "improve",
+        "launch"
+      ],
+      "summary": "Tasks: redesign homepage, improve load time, add blog.",
+      "path": "wiki/Projects/project-personal-website-redesign.md",
+      "content_preview": "Tasks: redesign homepage, improve load time, add blog. Milestone: launch beta by Aug.",
+      "group": "Projects"
+    },
+    {
+      "id": "5c1acfd46ccd496daf19715ac5c68ae6",
+      "label": "Second Self Project Deadline",
+      "para": "Projects",
+      "tags": [
+        "secondself",
+        "project",
+        "deadline",
+        "goal"
+      ],
+      "summary": "Complete the Second Self project by the specified deadline. The project's deadline is set for August 2nd.",
+      "path": "wiki/Projects/second-self-project-deadline.md",
+      "content_preview": "I will complete my Second self project on 2nd of August",
+      "group": "Projects"
+    },
+    {
+      "id": "secondself-1",
+      "label": "SecondSelf",
+      "para": "Projects",
+      "tags": [
+        "notes",
+        "graph",
+        "wiki",
+        "capture",
+        "configuration"
+      ],
+      "summary": "# SecondSelf  SecondSelf is a personal AI second brain.",
+      "path": "wiki/Projects/secondself-1.md",
+      "content_preview": "SecondSelf SecondSelf is a personal AI second brain. It captures notes, links, and files; organizes them into PARA-style Markdown notes; discovers related notes with local embeddings; visualizes the r",
+      "group": "Projects"
+    },
+    {
+      "id": "secondself-2",
+      "label": "SecondSelf",
+      "para": "Projects",
+      "tags": [
+        "notes",
+        "graph",
+        "wiki",
+        "capture",
+        "configuration"
+      ],
+      "summary": "# SecondSelf  SecondSelf is a personal AI second brain.",
+      "path": "wiki/Projects/secondself-2.md",
+      "content_preview": "SecondSelf SecondSelf is a personal AI second brain. It captures notes, links, and files; organizes them into PARA-style Markdown notes; discovers related notes with local embeddings; visualizes the r",
+      "group": "Projects"
+    },
+    {
+      "id": "secondself-project-overview-1",
+      "label": "SecondSelf",
+      "para": "Projects",
+      "tags": [
+        "notes",
+        "wiki",
+        "graph",
+        "data",
+        "captures"
+      ],
+      "summary": "# SecondSelf SecondSelf is a personal AI second brain.",
+      "path": "wiki/Projects/secondself-project-overview-1.md",
+      "content_preview": "SecondSelf SecondSelf is a personal AI second brain. It captures notes, links, and files; organizes them into PARA-style Markdown notes; discovers related notes with local embeddings; visualizes the r",
+      "group": "Projects"
+    },
+    {
+      "id": "secondself-project-overview-10",
+      "label": "secondself-project-overview-10",
+      "para": "Projects",
+      "tags": [],
+      "summary": "",
+      "path": "wiki/Projects/secondself-project-overview-10.md",
+      "content_preview": "SecondSelf SecondSelf is a personal AI second brain. It captures notes, links, and files; organizes them into PARA-style Markdown notes; discovers related notes with local embeddings; visualizes the r",
+      "group": "Projects"
+    },
+    {
+      "id": "1cc7fad0d37c424fb26e3f88dcc4eed1",
+      "label": "SecondSelf Project Overview",
+      "para": "Projects",
+      "tags": [
+        "secondself",
+        "ai",
+        "notes",
+        "organization"
+      ],
+      "summary": "SecondSelf is a personal AI second brain that captures, organizes, and visualizes notes, with the goal of creating a knowledge management system. The project is currently in Phase 0, with the repository structure and configuration in place.",
+      "path": "wiki/Projects/secondself-project-overview-11.md",
+      "content_preview": "SecondSelf SecondSelf is a personal AI second brain. It captures notes, links, and files; organizes them into PARA-style Markdown notes; discovers related notes with local embeddings; visualizes the r",
+      "group": "Projects"
+    },
+    {
+      "id": "cbf3123825ef45e79c38b843811c9f19",
+      "label": "SecondSelf Project Overview",
+      "para": "Projects",
+      "tags": [
+        "secondself",
+        "ai",
+        "notes",
+        "organization"
+      ],
+      "summary": "SecondSelf is a personal AI second brain that captures and organizes notes, links, and files. It aims to provide a comprehensive system for knowledge management and question answering.",
+      "path": "wiki/Projects/secondself-project-overview-2.md",
+      "content_preview": "SecondSelf SecondSelf is a personal AI second brain. It captures notes, links, and files; organizes them into PARA-style Markdown notes; discovers related notes with local embeddings; visualizes the r",
+      "group": "Projects"
+    },
+    {
+      "id": "secondself-project-overview-3",
+      "label": "SecondSelf",
+      "para": "Projects",
+      "tags": [
+        "notes",
+        "wiki",
+        "graph",
+        "data",
+        "captures"
+      ],
+      "summary": "# SecondSelf SecondSelf is a personal AI second brain.",
+      "path": "wiki/Projects/secondself-project-overview-3.md",
+      "content_preview": "SecondSelf SecondSelf is a personal AI second brain. It captures notes, links, and files; organizes them into PARA-style Markdown notes; discovers related notes with local embeddings; visualizes the r",
+      "group": "Projects"
+    },
+    {
+      "id": "9f70ed4d30814c6099d54d3d3d0bb05a",
+      "label": "SecondSelf Project Overview",
+      "para": "Projects",
+      "tags": [
+        "secondself",
+        "para",
+        "markdown",
+        "ai"
+      ],
+      "summary": "SecondSelf is a personal AI second brain that captures notes, links, and files, and organizes them into PARA-style Markdown notes. The project is currently in Phase 0 with the repository structure and configuration in place.",
+      "path": "wiki/Projects/secondself-project-overview-4.md",
+      "content_preview": "SecondSelf SecondSelf is a personal AI second brain. It captures notes, links, and files; organizes them into PARA-style Markdown notes; discovers related notes with local embeddings; visualizes the r",
+      "group": "Projects"
+    },
+    {
+      "id": "119b4e0c99c8478eb7b23cefe12e1465",
+      "label": "SecondSelf Project Overview",
+      "para": "Projects",
+      "tags": [
+        "secondself",
+        "ai",
+        "notes",
+        "organization"
+      ],
+      "summary": "SecondSelf is a personal AI second brain that captures and organizes notes, links, and files. It aims to provide a comprehensive system for knowledge management and question answering.",
+      "path": "wiki/Projects/secondself-project-overview-5.md",
+      "content_preview": "SecondSelf SecondSelf is a personal AI second brain. It captures notes, links, and files; organizes them into PARA-style Markdown notes; discovers related notes with local embeddings; visualizes the r",
+      "group": "Projects"
+    },
+    {
+      "id": "2bd17b9ba4bc4538900f703b9f9df84c",
+      "label": "SecondSelf Project Overview",
+      "para": "Projects",
+      "tags": [
+        "secondself",
+        "project",
+        "overview",
+        "para"
+      ],
+      "summary": "SecondSelf is a personal AI second brain that captures notes, links, and files, and organizes them into PARA-style Markdown notes. The project is currently in Phase 0 with the repository structure and configuration in place.",
+      "path": "wiki/Projects/secondself-project-overview-6.md",
+      "content_preview": "SecondSelf SecondSelf is a personal AI second brain. It captures notes, links, and files; organizes them into PARA-style Markdown notes; discovers related notes with local embeddings; visualizes the r",
+      "group": "Projects"
+    },
+    {
+      "id": "secondself-project-overview-7",
+      "label": "secondself-project-overview-7",
+      "para": "Projects",
+      "tags": [],
+      "summary": "",
+      "path": "wiki/Projects/secondself-project-overview-7.md",
+      "content_preview": "SecondSelf SecondSelf is a personal AI second brain. It captures notes, links, and files; organizes them into PARA-style Markdown notes; discovers related notes with local embeddings; visualizes the r",
+      "group": "Projects"
+    },
+    {
+      "id": "5f353659f5da4b8093db2101c2aa8805",
+      "label": "SecondSelf Project Overview",
+      "para": "Projects",
+      "tags": [
+        "secondself",
+        "ai",
+        "notes",
+        "organization"
+      ],
+      "summary": "SecondSelf is a personal AI second brain that captures, organizes, and visualizes notes. The project is currently in Phase 0 with the repository structure and configuration in place.",
+      "path": "wiki/Projects/secondself-project-overview-8.md",
+      "content_preview": "SecondSelf SecondSelf is a personal AI second brain. It captures notes, links, and files; organizes them into PARA-style Markdown notes; discovers related notes with local embeddings; visualizes the r",
+      "group": "Projects"
+    },
+    {
+      "id": "701cf468bdf345efa970aa8ce6b5148e",
+      "label": "SecondSelf Project Overview",
+      "para": "Projects",
+      "tags": [
+        "secondself",
+        "ai",
+        "notes",
+        "organization"
+      ],
+      "summary": "SecondSelf is a personal AI second brain that captures and organizes notes, links, and files. It aims to provide a comprehensive system for knowledge management and question answering.",
+      "path": "wiki/Projects/secondself-project-overview-9.md",
+      "content_preview": "SecondSelf SecondSelf is a personal AI second brain. It captures notes, links, and files; organizes them into PARA-style Markdown notes; discovers related notes with local embeddings; visualizes the r",
+      "group": "Projects"
+    },
+    {
+      "id": "509095a5cf0149e0b91cd1f049729d41",
+      "label": "SecondSelf Project Overview",
+      "para": "Projects",
+      "tags": [
+        "secondself",
+        "ai",
+        "note-taking",
+        "project-management"
+      ],
+      "summary": "SecondSelf is a personal AI second brain that captures, organizes, and visualizes notes, with a goal to discover related notes and answer questions from them. The project is currently in Phase 0, with the repository structure and configuration in place.",
+      "path": "wiki/Projects/secondself-project-overview.md",
+      "content_preview": "SecondSelf SecondSelf is a personal AI second brain. It captures notes, links, and files; organizes them into PARA-style Markdown notes; discovers related notes with local embeddings; visualizes the r",
+      "group": "Projects"
+    },
+    {
+      "id": "secondself",
+      "label": "SecondSelf",
+      "para": "Projects",
+      "tags": [
+        "notes",
+        "graph",
+        "wiki",
+        "capture",
+        "configuration"
+      ],
+      "summary": "# SecondSelf  SecondSelf is a personal AI second brain.",
+      "path": "wiki/Projects/secondself.md",
+      "content_preview": "SecondSelf SecondSelf is a personal AI second brain. It captures notes, links, and files; organizes them into PARA-style Markdown notes; discovers related notes with local embeddings; visualizes the r",
+      "group": "Projects"
+    },
+    {
+      "id": "smoke-test-note-1",
+      "label": "smoke-test-note-1",
+      "para": "Projects",
+      "tags": [],
+      "summary": "",
+      "path": "wiki/Projects/smoke-test-note-1.md",
+      "content_preview": "Smoke test from app.py - quick note. Related - smoke-test-note",
+      "group": "Projects"
+    },
+    {
+      "id": "smoke-test-note-2",
+      "label": "smoke-test-note-2",
+      "para": "Projects",
+      "tags": [],
+      "summary": "",
+      "path": "wiki/Projects/smoke-test-note-2.md",
+      "content_preview": "Smoke test from app.py - quick note. Related - smoke-test-note-3",
+      "group": "Projects"
+    },
+    {
+      "id": "smoke-test-note-3",
+      "label": "smoke-test-note-3",
+      "para": "Projects",
+      "tags": [],
+      "summary": "",
+      "path": "wiki/Projects/smoke-test-note-3.md",
+      "content_preview": "Smoke test from app.py - quick note. Related - smoke-test-note-2",
+      "group": "Projects"
+    },
+    {
+      "id": "smoke-test-note",
+      "label": "smoke-test-note",
+      "para": "Projects",
+      "tags": [],
+      "summary": "",
+      "path": "wiki/Projects/smoke-test-note.md",
+      "content_preview": "Smoke test from app.py - quick note. Related - smoke-test-note-1",
+      "group": "Projects"
+    },
+    {
+      "id": "trip-home-1",
+      "label": "trip-home-1",
+      "para": "Projects",
+      "tags": [],
+      "summary": "",
+      "path": "wiki/Projects/trip-home-1.md",
+      "content_preview": "I want to go home on 8 August Related - trip-home",
+      "group": "Projects"
+    },
+    {
+      "id": "7e178c37eb364a749df3ab881456a6f6",
+      "label": "trip home",
+      "para": "Projects",
+      "tags": [
+        "travel",
+        "personal",
+        "deadline"
+      ],
+      "summary": "Planning to go home on a specific date, with a deadline of 8 August.",
+      "path": "wiki/Projects/trip-home-2.md",
+      "content_preview": "I want to go home on 8 August",
+      "group": "Projects"
+    },
+    {
+      "id": "17f282625c5a4a92a8495f23f6e8207b",
+      "label": "Trip Home on August 8th",
+      "para": "Projects",
+      "tags": [
+        "travel",
+        "personal",
+        "deadline"
+      ],
+      "summary": "Planning to go home on August 8th, a specific time-bound goal.",
+      "path": "wiki/Projects/trip-home-on-august-8th.md",
+      "content_preview": "I want to go home on 8 August",
+      "group": "Projects"
+    },
+    {
+      "id": "trip-home",
+      "label": "trip-home",
+      "para": "Projects",
+      "tags": [],
+      "summary": "",
+      "path": "wiki/Projects/trip-home.md",
+      "content_preview": "I want to go home on 8 August Related - trip-home-1",
+      "group": "Projects"
+    },
+    {
+      "id": "trip-to-dhanana-dham-1",
+      "label": "trip-to-dhanana-dham-1",
+      "para": "Projects",
+      "tags": [],
+      "summary": "",
+      "path": "wiki/Projects/trip-to-dhanana-dham-1.md",
+      "content_preview": "I will go to Dhanana Dham on 10th of August Related - trip-to-dhanana-dham",
+      "group": "Projects"
+    },
+    {
+      "id": "trip-to-dhanana-dham",
+      "label": "trip-to-dhanana-dham",
+      "para": "Projects",
+      "tags": [],
+      "summary": "",
+      "path": "wiki/Projects/trip-to-dhanana-dham.md",
+      "content_preview": "I will go to Dhanana Dham on 10th of August Related - trip-to-dhanana-dham-1",
+      "group": "Projects"
+    },
+    {
+      "id": "e50d7b3d5f714196b4755429843d9576",
+      "label": "Area: Health routines",
+      "para": "Resources",
+      "tags": [
+        "consistency",
+        "daily",
+        "health",
+        "hydration",
+        "maintain"
+      ],
+      "summary": "Daily routines for health: sleep schedule, morning walk, hydration reminders.",
+      "path": "wiki/Resources/area-health-routines.md",
+      "content_preview": "Daily routines for health: sleep schedule, morning walk, hydration reminders. Responsibilities: maintain consistency.",
+      "group": "Resources"
+    },
+    {
+      "id": "4da8c2df39e84f3588d1fc3e2840dfae",
+      "label": "C Program for Basic Arithmetic Operations",
+      "para": "Resources",
+      "tags": [
+        "c programming",
+        "arithmetic",
+        "calculator"
+      ],
+      "summary": "This is a C program that performs basic arithmetic operations like addition, subtraction, multiplication, division, and remainder based on user input. It provides a menu-driven interface for users to select the operation and input numbers.",
+      "path": "wiki/Resources/c-program-for-basic-arithmetic-operations-1.md",
+      "content_preview": "C Program for Basic Arithmetic Operations Introduction This program is a simple calculator that performs basic arithmetic operations. Code Explanation The program uses and libraries for input/output a",
+      "group": "Resources"
+    },
+    {
+      "id": "8f48f1d4f6de4dcbb4ddfe6c0c179ace",
+      "label": "c program for basic arithmetic operations",
+      "para": "Resources",
+      "tags": [
+        "c programming",
+        "arithmetic",
+        "calculator"
+      ],
+      "summary": "This is a C program that performs basic arithmetic operations like addition, subtraction, multiplication, division, and remainder based on user input. It provides a menu-driven interface for users to select the operation and input numbers.",
+      "path": "wiki/Resources/c-program-for-basic-arithmetic-operations-3.md",
+      "content_preview": "C Program for Basic Arithmetic Operations Program Purpose The program is a simple calculator that takes user input for arithmetic operations. Code Explanation The program uses for input/output functio",
+      "group": "Resources"
+    },
+    {
+      "id": "e53b14839e37400d8c4aff54040696fa",
+      "label": "c program for basic arithmetic operations",
+      "para": "Resources",
+      "tags": [
+        "c programming",
+        "arithmetic",
+        "calculator"
+      ],
+      "summary": "This is a C program that performs basic arithmetic operations like addition, subtraction, multiplication, division, and remainder based on user input. It provides a menu-driven interface for users to select the operation and input numbers.",
+      "path": "wiki/Resources/c-program-for-basic-arithmetic-operations.md",
+      "content_preview": "C Program for Basic Arithmetic Operations Introduction This program is a simple calculator that performs basic arithmetic operations. Code Explanation The program uses a menu-driven approach to let us",
+      "group": "Resources"
+    },
+    {
+      "id": "d70c055bfa794c1aab8f4ada7fcc9726",
+      "label": "c programming calculator",
+      "para": "Resources",
+      "tags": [
+        "c programming",
+        "calculator",
+        "code explanation"
+      ],
+      "summary": "This is a C program that functions as a calculator, allowing users to perform addition, subtraction, multiplication, division, and remainder operations. The program explains each line of code and its purpose.",
+      "path": "wiki/Resources/c-programming-calculator.md",
+      "content_preview": "C Program Calculator Purpose The program is a calculator that allows users to choose from a menu of operations: addition, subtraction, multiplication, division, and remainder. Code Explanation Librari",
+      "group": "Resources"
+    },
+    {
+      "id": "84712af921da4f908da7e65582b58b0c",
+      "label": "Deep Work Summary",
+      "para": "Resources",
+      "tags": [
+        "productivity",
+        "focus",
+        "time management"
+      ],
+      "summary": "Summary of Cal Newport's Deep Work, emphasizing the importance of focus in long, uninterrupted blocks. Key idea is to schedule deep work sessions.",
+      "path": "wiki/Resources/deep-work-summary-1.md",
+      "content_preview": "Deep Work Summary Cal Newport's Deep Work emphasizes the importance of focus in long, uninterrupted blocks. The key idea is to schedule deep work sessions to maximize productivity.",
+      "group": "Resources"
+    },
+    {
+      "id": "163894381acc482183b1b2dbe1bb288c",
+      "label": "Deep Work Summary",
+      "para": "Resources",
+      "tags": [
+        "productivity",
+        "focus",
+        "deepwork"
+      ],
+      "summary": "Summary of Cal Newport's Deep Work, emphasizing the importance of focus in long, uninterrupted blocks. Key idea is to schedule deep work sessions.",
+      "path": "wiki/Resources/deep-work-summary-2.md",
+      "content_preview": "Deep Work Summary Cal Newport's Deep Work emphasizes the importance of focus in long, uninterrupted blocks. The key idea is to schedule deep work sessions.",
+      "group": "Resources"
+    },
+    {
+      "id": "a0f0ee4bf2e64506ba6f08796234afe2",
+      "label": "Deep Work Summary",
+      "para": "Resources",
+      "tags": [
+        "productivity",
+        "focus",
+        "deepwork"
+      ],
+      "summary": "Summary of Cal Newport's Deep Work, emphasizing focus in long, uninterrupted blocks and scheduling deep work sessions.",
+      "path": "wiki/Resources/deep-work-summary.md",
+      "content_preview": "Deep Work Summary Cal Newport's Deep Work suggests focusing in long, uninterrupted blocks. The key idea is to schedule deep work sessions.",
+      "group": "Resources"
+    },
+    {
+      "id": "example-article-1",
+      "label": "example-article-1",
+      "para": "Resources",
+      "tags": [],
+      "summary": "",
+      "path": "wiki/Resources/example-article-1.md",
+      "content_preview": "example article Related - example-article",
+      "group": "Resources"
+    },
+    {
+      "id": "9344af6c79694fc3bfc37afbf62d0cd3",
+      "label": "example article",
+      "para": "Resources",
+      "tags": [
+        "article",
+        "reference",
+        "bookmark"
+      ],
+      "summary": "A link to an article on example.com for future reference.",
+      "path": "wiki/Resources/example-article-3.md",
+      "content_preview": "example article",
+      "group": "Resources"
+    },
+    {
+      "id": "example-article",
+      "label": "example-article",
+      "para": "Resources",
+      "tags": [],
+      "summary": "",
+      "path": "wiki/Resources/example-article.md",
+      "content_preview": "example article Related - example-article-1",
+      "group": "Resources"
+    },
+    {
+      "id": "https-example-com-article",
+      "label": "https://example.com/article",
+      "para": "Resources",
+      "tags": [
+        "article",
+        "example",
+        "https",
+        "related"
+      ],
+      "summary": "https://example.com/article",
+      "path": "wiki/Resources/https-example-com-article.md",
+      "content_preview": "https://example.com/article",
+      "group": "Resources"
+    },
+    {
+      "id": "idea-weekly-review-template",
+      "label": "Idea: weekly review template",
+      "para": "Resources",
+      "tags": [
+        "idea",
+        "review",
+        "template",
+        "weekly",
+        "related"
+      ],
+      "summary": "Idea: weekly review template",
+      "path": "wiki/Resources/idea-weekly-review-template.md",
+      "content_preview": "Idea: weekly review template Related - idea-weekly-review-template-7",
+      "group": "Resources"
+    },
+    {
+      "id": "image-of-a-librarian",
+      "label": "image-of-a-librarian",
+      "para": "Resources",
+      "tags": [],
+      "summary": "",
+      "path": "wiki/Resources/image-of-a-librarian.md",
+      "content_preview": "No markdown content available for this image file. Related - image-of-a-librarian",
+      "group": "Resources"
+    },
+    {
+      "id": "fabe013325f9433b965be8c1d89a550d",
+      "label": "Image: the-archivist",
+      "para": "Resources",
+      "tags": [
+        "image",
+        "reference",
+        "archivist"
+      ],
+      "summary": "An image file named the-archivist.png, stored for potential future reference.",
+      "path": "wiki/Resources/image-the-archivist-1.md",
+      "content_preview": "No markdown content available for this image file.",
+      "group": "Resources"
+    },
+    {
+      "id": "image-the-archivist",
+      "label": "image-the-archivist",
+      "para": "Resources",
+      "tags": [],
+      "summary": "",
+      "path": "wiki/Resources/image-the-archivist.md",
+      "content_preview": "No markdown content available, as this is an image file. Related - image-the-archivist-1",
+      "group": "Resources"
+    },
+    {
+      "id": "3fbdc43cc32d4afb9778a4e44139b84c",
+      "label": "Jitesh Bhatia's LinkedIn Profile",
+      "para": "Resources",
+      "tags": [
+        "linkedin",
+        "profile",
+        "contact"
+      ],
+      "summary": "A link to Jitesh Bhatia's LinkedIn profile for future reference.",
+      "path": "wiki/Resources/jitesh-bhatia-s-linkedin-profile-1.md",
+      "content_preview": "Jitesh Bhatia's LinkedIn Profile",
+      "group": "Resources"
+    },
+    {
+      "id": "jitesh-bhatia-s-linkedin-profile",
+      "label": "jitesh-bhatia-s-linkedin-profile",
+      "para": "Resources",
+      "tags": [],
+      "summary": "",
+      "path": "wiki/Resources/jitesh-bhatia-s-linkedin-profile.md",
+      "content_preview": "Jitesh Bhatia's LinkedIn Profile Related - jitesh-bhatia-s-linkedin-profile-1",
+      "group": "Resources"
+    },
+    {
+      "id": "ff2375bdaa8743c69f0a6d98c20adadf",
+      "label": "librarian badge image",
+      "para": "Resources",
+      "tags": [
+        "badge",
+        "image",
+        "librarian"
+      ],
+      "summary": "An image of a librarian badge, potentially for reference or identification purposes.",
+      "path": "wiki/Resources/librarian-badge-image-1.md",
+      "content_preview": "!librarian badge",
+      "group": "Resources"
+    },
+    {
+      "id": "librarian-badge-image-3",
+      "label": "librarian-badge-image-3",
+      "para": "Resources",
+      "tags": [],
+      "summary": "",
+      "path": "wiki/Resources/librarian-badge-image-3.md",
+      "content_preview": "!librarian badge Related - librarian-badge-image",
+      "group": "Resources"
+    },
+    {
+      "id": "librarian-badge-image",
+      "label": "librarian-badge-image",
+      "para": "Resources",
+      "tags": [],
+      "summary": "",
+      "path": "wiki/Resources/librarian-badge-image.md",
+      "content_preview": "!librarian badge Related - librarian-badge-image-3",
+      "group": "Resources"
+    },
+    {
+      "id": "python-coding-reference",
+      "label": "## Useful Python Snippets",
+      "para": "Resources",
+      "tags": [
+        "python",
+        "coding",
+        "reference",
+        "comprehensions",
+        "context"
+      ],
+      "summary": "### Useful Python Snippets * List comprehensions * Context managers * Pathlib usage",
+      "path": "wiki/Resources/python-coding-reference.md",
+      "content_preview": "Useful Python Snippets List comprehensions Context managers Pathlib usage",
+      "group": "Resources"
+    },
+    {
+      "id": "aac6139bf55f410581d4f29b0af1f889",
+      "label": "Resource: Python tips and snippets",
+      "para": "Resources",
+      "tags": [
+        "coding",
+        "comprehensions",
+        "context",
+        "list",
+        "managers"
+      ],
+      "summary": "Useful Python snippets: list comprehensions, context managers, pathlib usage.",
+      "path": "wiki/Resources/resource-python-tips-and-snippets.md",
+      "content_preview": "Useful Python snippets: list comprehensions, context managers, pathlib usage. Store as reference for coding sessions.",
+      "group": "Resources"
+    },
+    {
+      "id": "f5fa7899c249473cad7936ccf4b59711",
+      "label": "School Work Attachment",
+      "para": "Resources",
+      "tags": [
+        "school",
+        "attachment",
+        "pdf"
+      ],
+      "summary": "A PDF file related to school work, stored locally on the user's computer.",
+      "path": "wiki/Resources/school-work-attachment-1.md",
+      "content_preview": "SCHOOL WORK 1.pdf",
+      "group": "Resources"
+    },
+    {
+      "id": "school-work-attachment",
+      "label": "school-work-attachment",
+      "para": "Resources",
+      "tags": [],
+      "summary": "",
+      "path": "wiki/Resources/school-work-attachment.md",
+      "content_preview": "SCHOOL WORK 1.pdf Related - school-work-attachment-1",
+      "group": "Resources"
+    },
+    {
+      "id": "65a8f0f9da704f42b91c235171105eff",
+      "label": "Weekly Review Template Idea",
+      "para": "Resources",
+      "tags": [
+        "productivity",
+        "templates",
+        "review",
+        "organization"
+      ],
+      "summary": "A note about creating a template for weekly reviews to enhance productivity and organization.",
+      "path": "wiki/Resources/weekly-review-template-idea-1.md",
+      "content_preview": "Idea: weekly review template",
+      "group": "Resources"
+    },
+    {
+      "id": "903a83b1f6ec4319b74d05f26fe5619e",
+      "label": "Weekly Review Template Idea",
+      "para": "Resources",
+      "tags": [
+        "productivity",
+        "templates",
+        "review"
+      ],
+      "summary": "Idea for creating a weekly review template to enhance productivity and organization. This template could help in streamlining weekly tasks and goals.",
+      "path": "wiki/Resources/weekly-review-template-idea-4.md",
+      "content_preview": "Idea: Weekly Review Template Consider creating a template to facilitate a weekly review process, helping to organize tasks, set goals, and track progress.",
+      "group": "Resources"
+    },
+    {
+      "id": "214138c45afb4762a9da9b1817baa28c",
+      "label": "Weekly Review Template Idea",
+      "para": "Resources",
+      "tags": [
+        "productivity",
+        "templates",
+        "review"
+      ],
+      "summary": "Idea for creating a weekly review template to enhance productivity and organization.",
+      "path": "wiki/Resources/weekly-review-template-idea.md",
+      "content_preview": "Idea: weekly review template",
+      "group": "Resources"
+    },
+    {
+      "id": "weekly-review-template",
+      "label": "Weekly review: reflect on wins, learnings, and next actions. Use this template every Friday.",
+      "para": "Resources",
+      "tags": [
+        "review",
+        "template",
+        "weekly",
+        "actions",
+        "every"
+      ],
+      "summary": "Weekly review: reflect on wins, learnings, and next actions.",
+      "path": "wiki/Resources/weekly-review-template.md",
+      "content_preview": "Weekly review: reflect on wins, learnings, and next actions. Use this template every Friday. Related - weekly-review-template",
+      "group": "Resources"
+    }
+  ],
+  "edges": [
+    {
+      "source": "january-meeting-notes-1",
+      "target": "january-meeting-notes-2",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "january-meeting-notes-1",
+      "target": "january-meeting-notes-3",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "january-meeting-notes-1",
+      "target": "january-meeting-notes",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "january-meeting-notes-2",
+      "target": "january-meeting-notes-3",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "january-meeting-notes-2",
+      "target": "january-meeting-notes",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "january-meeting-notes-3",
+      "target": "january-meeting-notes",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "daily-health-routines-1",
+      "target": "daily-health-routines",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "daily-health-routines-2",
+      "target": "daily-health-routines-3",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "2d39a28c66a14c24a9065c25474884e9",
+      "target": "weekly-review-template-3",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "weekly-review-template-10",
+      "target": "weekly-review-template-3",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "weekly-review-template-5",
+      "target": "weekly-review-template-6",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "1-program-ka-purpose-kya-hai-1",
+      "target": "1-program-ka-purpose-kya-hai-2",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "1-program-ka-purpose-kya-hai-1",
+      "target": "1-program-ka-purpose-kya-hai",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "1-program-ka-purpose-kya-hai-2",
+      "target": "1-program-ka-purpose-kya-hai",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "beta-launch-tasks-1",
+      "target": "beta-launch-tasks-2",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "beta-launch-tasks-1",
+      "target": "beta-launch-tasks-3",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "beta-launch-tasks-1",
+      "target": "bce4bab7c8ae4588bb927fd7e9378b5a",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "beta-launch-tasks-10",
+      "target": "beta-launch-tasks-4",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "beta-launch-tasks-2",
+      "target": "beta-launch-tasks-3",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "beta-launch-tasks-2",
+      "target": "bce4bab7c8ae4588bb927fd7e9378b5a",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "beta-launch-tasks-3",
+      "target": "bce4bab7c8ae4588bb927fd7e9378b5a",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "beta-launch-tasks-5",
+      "target": "beta-launch-tasks-6",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "beta-launch-tasks-5",
+      "target": "beta-launch-tasks-7",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "beta-launch-tasks-5",
+      "target": "beta-launch-tasks-8",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "beta-launch-tasks-6",
+      "target": "beta-launch-tasks-7",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "beta-launch-tasks-6",
+      "target": "beta-launch-tasks-8",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "beta-launch-tasks-7",
+      "target": "beta-launch-tasks-8",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "beta-launch-tasks",
+      "target": "beta-launch-tasks-1",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "beta-launch-tasks",
+      "target": "beta-launch-tasks-2",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "beta-launch-tasks",
+      "target": "beta-launch-tasks-3",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "secondself-1",
+      "target": "secondself-2",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "secondself-project-overview-1",
+      "target": "secondself-project-overview-3",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "secondself-project-overview-10",
+      "target": "secondself-project-overview-7",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "secondself",
+      "target": "secondself-1",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "secondself",
+      "target": "secondself-2",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "smoke-test-note-1",
+      "target": "smoke-test-note",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "smoke-test-note-2",
+      "target": "smoke-test-note-3",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "trip-home-1",
+      "target": "7e178c37eb364a749df3ab881456a6f6",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "trip-home",
+      "target": "trip-home-1",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "trip-to-dhanana-dham-1",
+      "target": "trip-to-dhanana-dham",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "example-article-1",
+      "target": "9344af6c79694fc3bfc37afbf62d0cd3",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "example-article",
+      "target": "example-article-1",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "image-the-archivist",
+      "target": "fabe013325f9433b965be8c1d89a550d",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "jitesh-bhatia-s-linkedin-profile",
+      "target": "3fbdc43cc32d4afb9778a4e44139b84c",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "librarian-badge-image-3",
+      "target": "ff2375bdaa8743c69f0a6d98c20adadf",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "librarian-badge-image",
+      "target": "librarian-badge-image-3",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "school-work-attachment",
+      "target": "f5fa7899c249473cad7936ccf4b59711",
+      "type": "wikilink",
+      "weight": 1.0
+    },
+    {
+      "source": "weekly-review-template",
+      "target": "2d39a28c66a14c24a9065c25474884e9",
+      "type": "wikilink",
+      "weight": 1.0
+    }
+  ]
+}
