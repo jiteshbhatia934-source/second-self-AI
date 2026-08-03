@@ -1,1 +1,0 @@
-Python-based personal knowledge system that captures notes, auto-classifies them into PARA Markdown, computes embeddings for related-link discovery, renders an interactive graph, and answers questions via RAG over a Streamlit app.

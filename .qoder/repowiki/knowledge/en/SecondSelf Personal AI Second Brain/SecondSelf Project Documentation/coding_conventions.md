@@ -1,5 +1,0 @@
-- Each pipeline stage is a top-level Python script with a clear single responsibility and CLI interface, invoked sequentially rather than imported as libraries.
-- Data persistence uses plain files on disk (JSON envelopes in `raw/`, Markdown with YAML front matter in `wiki/`, pickle/numpy for embedding cache) instead of a database.
-- Configuration is read from environment variables via `python-dotenv` with documented defaults, never hard-coded; secrets like `GROQ_API_KEY` are excluded from the repo.
-- Idempotency is enforced per stage — wiki notes keyed by `raw_id`, embedding cache invalidated by body hash, and re-runs skip already-processed items unless `--force` is passed.
-- Edge cases are tracked in a numbered register (`ENV-*`, `CAP-*`, `CLS-*`, `LNK-*`, `GRF-*`, `ASK-*`, `APP-*`, `DEP-*`) with severity levels S1/S2/S3 guiding expected behavior.

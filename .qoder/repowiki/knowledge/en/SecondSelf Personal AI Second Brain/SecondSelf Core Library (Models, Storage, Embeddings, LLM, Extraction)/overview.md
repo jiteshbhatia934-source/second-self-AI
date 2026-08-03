@@ -1,1 +1,0 @@
-Shared Python library for SecondSelf providing data models, filesystem storage, text extraction, vector embeddings, and Groq LLM integration used across all processing phases.

@@ -1,1 +1,0 @@
-Requires `GROQ_API_KEY` set in environment or `.env` file at project root. Optional heavy dependencies are lazy-imported — the package remains importable without them, but `embeddings.py` falls back to a hash-based pseudo-embedder and `llm.py` raises `ImportError`/`EnvironmentError` if groq is missing or the key is unset.

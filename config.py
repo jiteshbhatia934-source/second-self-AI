@@ -16,6 +16,31 @@ PROJECT_ROOT = Path(__file__).resolve().parent
 load_dotenv(PROJECT_ROOT / ".env")
 
 
+def _apply_streamlit_secrets() -> None:
+    """Map Streamlit Cloud / secrets.toml values into os.environ (no-op outside Streamlit)."""
+    try:
+        import streamlit as st  # noqa: PLC0415 — optional; only available in the app runtime
+
+        for key in (
+            "GROQ_API_KEY",
+            "SIMILARITY_THRESHOLD",
+            "TOP_K_RETRIEVAL",
+            "EMBEDDING_MODEL",
+            "PUBLIC_DEMO",
+            "RAW_DIR",
+            "WIKI_DIR",
+            "DATA_DIR",
+            "GRAPH_PATH",
+        ):
+            if key in st.secrets and not os.getenv(key):
+                os.environ[key] = str(st.secrets[key])
+    except Exception:
+        pass
+
+
+_apply_streamlit_secrets()
+
+
 def _path_from_env(env_key: str, default_relative: str) -> Path:
     override = os.getenv(env_key)
     if override:
@@ -37,6 +62,13 @@ def _float_env(name: str, default: float, min_val: float, max_val: float) -> flo
     if not min_val <= value <= max_val:
         raise ValueError(f"{name} must be between {min_val} and {max_val}, got {value}")
     return value
+
+
+def _bool_env(name: str, default: bool = False) -> bool:
+    raw = os.getenv(name)
+    if raw is None or raw.strip() == "":
+        return default
+    return raw.strip().lower() in ("1", "true", "yes")
 
 
 def _int_env(name: str, default: int, min_val: int, max_val: int) -> int:
@@ -63,6 +95,8 @@ TOP_K_RETRIEVAL = _int_env("TOP_K_RETRIEVAL", 8, 1, 20)
 EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "all-MiniLM-L6-v2").strip()
 if not EMBEDDING_MODEL:
     raise ValueError("EMBEDDING_MODEL must not be empty")
+
+PUBLIC_DEMO = _bool_env("PUBLIC_DEMO", False)
 
 PARA_FOLDERS = ("Projects", "Areas", "Resources", "Archives")
 

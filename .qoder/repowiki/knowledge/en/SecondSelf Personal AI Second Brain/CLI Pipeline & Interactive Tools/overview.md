@@ -1,1 +1,0 @@
-Command-line tools that capture raw content, classify it into PARA wiki notes, compute embeddings and related links, build a knowledge graph, and provide an interactive Streamlit preview with RAG-based question answering.

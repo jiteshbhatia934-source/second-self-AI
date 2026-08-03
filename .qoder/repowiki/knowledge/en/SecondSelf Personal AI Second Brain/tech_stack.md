@@ -1,1 +1,0 @@
-Python 3.10+ with Streamlit for the interactive UI, Groq SDK for LLM classification/RAG, sentence-transformers + PyTorch for local embeddings, python-frontmatter for YAML frontmatter parsing, Typer for CLI entry points, and python-dotenv for environment configuration.

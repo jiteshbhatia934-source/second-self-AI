@@ -590,6 +590,13 @@ def render_header() -> None:
 def render_ask_section() -> None:
     st.markdown('<p class="ss-section-title">Ask your brain</p>', unsafe_allow_html=True)
 
+    if not config.groq_configured():
+        st.info(
+            "Groq API key is not configured — retrieved sources will appear, "
+            "but no synthesized answer will be generated. "
+            "Set `GROQ_API_KEY` in `.env` or Streamlit secrets."
+        )
+
     defaults = st.session_state.get("ask_question", "What are my career goals?")
     question = st.text_input(
         "Ask a question",
@@ -679,8 +686,18 @@ def main() -> None:
         st.toast(flash, icon="✅")
 
     with st.sidebar:
-        render_capture_section()
-        render_pipeline_section()
+        if config.PUBLIC_DEMO:
+            st.markdown(
+                '<p class="ss-sidebar-title">Demo mode</p>',
+                unsafe_allow_html=True,
+            )
+            st.caption(
+                "Capture and pipeline are disabled on this public deployment. "
+                "Explore the graph and ask questions below."
+            )
+        else:
+            render_capture_section()
+            render_pipeline_section()
         render_stats_section()
 
     render_main()

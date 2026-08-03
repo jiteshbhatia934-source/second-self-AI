@@ -1,5 +1,0 @@
-- Configuration is centralized in `config.py` and accessed via module-level constants rather than direct `os.getenv` calls.
-- Environment variables are validated at import time with explicit min/max bounds and descriptive error messages.
-- Path overrides from `.env` are resolved relative to the repository root (`PROJECT_ROOT`) rather than the shell's working directory.
-- PARA folder structure (Projects/Areas/Resources/Archives) is enforced as a fixed tuple and created on demand via `ensure_project_dirs()`.
-- Optional dependencies like `dotenv` are wrapped in try/except fallbacks so core code runs even when non-essential packages are missing.

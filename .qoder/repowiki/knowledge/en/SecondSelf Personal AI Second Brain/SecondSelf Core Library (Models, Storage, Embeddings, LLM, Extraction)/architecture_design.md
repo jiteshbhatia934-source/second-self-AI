@@ -1,8 +1,0 @@
-The module is a flat package of single-responsibility modules sharing a common data model layer:
-- `models.py` defines pure dataclasses (`CaptureMeta`, `CaptureResult`, `WikiNote`, `GraphNode`, `GraphEdge`, `AskResult`) with no external dependencies so every phase can import them without pulling in heavy libraries.
-- `storage.py` handles all filesystem I/O: raw captures under `raw/{id}/`, wiki notes under `wiki/{para}/{id}.md` with YAML front matter, and the central index at `data/index.json`. It lazily resolves paths via an optional `config` module, falling back to project-root defaults.
-- `extract.py` dispatches plain-text extraction by capture type (note → file read, link → requests+BeautifulSoup, file → pypdf or filename fallback).
-- `embeddings.py` wraps sentence-transformers (`all-MiniLM-L6-v2`) with a deterministic `_HashEmbedder` fallback when the library is unavailable; persists vectors as pickle in `data/embeddings.pkl` with atomic tmp-replace writes.
-- `llm.py` wraps the Groq API with retry + exponential backoff, exposing `classify_content` (PARA classification) and `synthesize_answer` (RAG synthesis).
-
-Dependency direction is one-way: `storage.py` imports from `models.py`; `embeddings.py` and `llm.py` are independent utilities consumed by higher-level scripts. All optional heavy dependencies (`sentence_transformers`, `groq`, `requests`, `bs4`, `pypdf`, `yaml`, `dotenv`) are imported lazily inside functions to keep the package importable without them.
