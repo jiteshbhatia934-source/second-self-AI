@@ -161,19 +161,44 @@ def build_note_embeddings(notes: list[tuple[str, str, Path]], model_name: Option
 
 # ── Internal fallback ─────────────────────────────────────────────────────────
 
-class _HashEmbedder:
-    """Deterministic pseudo-embedder for environments without sentence-transformers."""
+class _SmartTFIDFEmbedder:
+    """Intelligent TF-IDF & N-gram feature hashing embedder for environments without sentence-transformers."""
     def __init__(self, name: str, dim: int = 384):
         self.name = name
         self.dim = dim
 
     def encode(self, text: str) -> np.ndarray:
-        seed = hashlib.sha256(text.encode("utf-8")).digest()
-        buf = bytearray()
-        while len(buf) < self.dim:
-            seed = hashlib.sha256(seed).digest()
-            buf.extend(seed)
-        arr = np.frombuffer(bytes(buf[: self.dim]), dtype=np.uint8).astype(np.float32)
-        arr = (arr - 127.5) / 127.5
-        norm = np.linalg.norm(arr)
-        return arr / norm if norm > 0 else arr
+        if not text or not text.strip():
+            return np.zeros(self.dim, dtype=np.float32)
+
+        import math
+        import re
+        tokens = re.findall(r"[a-z0-9]+", text.lower())
+        if not tokens:
+            return np.zeros(self.dim, dtype=np.float32)
+
+        # Extract 1-grams and 2-grams for semantic n-gram matching
+        ngrams = list(tokens)
+        for i in range(len(tokens) - 1):
+            ngrams.append(f"{tokens[i]}_{tokens[i+1]}")
+
+        tf: dict[str, int] = {}
+        for token in ngrams:
+            tf[token] = tf.get(token, 0) + 1
+
+        vec = np.zeros(self.dim, dtype=np.float32)
+        for token, count in tf.items():
+            # Hash token to dimension index deterministically
+            h = int(hashlib.md5(token.encode("utf-8")).hexdigest(), 16) % self.dim
+            # Sublinear TF weight
+            weight = 1.0 + math.log(count)
+            vec[h] += weight
+
+        norm = np.linalg.norm(vec)
+        if norm > 0.0:
+            vec = vec / norm
+        return vec.astype(np.float32)
+
+
+# Keep alias for backwards compatibility
+_HashEmbedder = _SmartTFIDFEmbedder

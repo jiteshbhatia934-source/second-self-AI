@@ -180,6 +180,39 @@ def _top_matches(question: str, notes_map: dict[str, WikiNote], vectors: dict[st
     return results
 
 
+def semantic_search(query: str, top_k: int = 10) -> list[dict[str, Any]]:
+    """Perform a pure semantic similarity search over all wiki notes and return ranked results."""
+    query = (query or "").strip()
+    if not query:
+        return []
+
+    notes_map = _load_notes_by_slug()
+    if not notes_map:
+        return []
+
+    vectors = _load_or_build_vectors(notes_map)
+    matches = _top_matches(query, notes_map, vectors, top_k)
+
+    results = []
+    for note, score in matches:
+        body_clean = re.sub(r"\s+", " ", note.body or "").strip()
+        snippet = body_clean[:250] + ("..." if len(body_clean) > 250 else "")
+        results.append(
+            {
+                "id": note.id,
+                "slug": note.slug,
+                "title": note.title or note.id or note.slug,
+                "path": note.path,
+                "para": note.para,
+                "tags": note.tags,
+                "summary": note.summary,
+                "relevance_score": round(float(score), 4),
+                "snippet": snippet,
+            }
+        )
+    return results
+
+
 def ask(question: str) -> dict[str, Any]:
     """Answer a user question from local wiki notes."""
     question = question.strip()
@@ -254,14 +287,29 @@ def ask(question: str) -> dict[str, Any]:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Ask questions against your wiki notes.")
-    parser.add_argument("question", nargs="?", help="Question to ask")
-    parser.add_argument("--pretty", action="store_true", help="Print a readable answer instead of JSON")
+    parser = argparse.ArgumentParser(description="Ask questions or perform semantic search against your wiki notes.")
+    parser.add_argument("question", nargs="?", help="Question or query to search")
+    parser.add_argument("--search", "--semantic", action="store_true", help="Perform pure semantic search over notes")
+    parser.add_argument("--pretty", action="store_true", help="Print a readable answer/search output instead of JSON")
     args = parser.parse_args()
 
     if not args.question:
         parser.print_help()
         sys.exit(1)
+
+    if args.search:
+        results = semantic_search(args.question)
+        if args.pretty:
+            print(f"Semantic Search Results for: '{args.question}'\n")
+            for res in results:
+                print(f"- {res['title']} ({res['path']}) [Score: {res['relevance_score']:.3f}]")
+                if res['summary']:
+                    print(f"  Summary: {res['summary']}")
+                print()
+        else:
+            json.dump(results, sys.stdout, indent=2, ensure_ascii=False)
+            sys.stdout.write("\n")
+        return
 
     result = ask(args.question)
     if args.pretty:

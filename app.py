@@ -585,6 +585,65 @@ def render_header() -> None:
             st.rerun()
 
 
+# ── Main: Semantic Search ───────────────────────────────────────────────────
+
+def render_semantic_search_section() -> None:
+    st.markdown('<p class="ss-section-title">Semantic Search</p>', unsafe_allow_html=True)
+    st.caption("Search your second brain using conceptual similarity, topics, or keywords.")
+
+    defaults = st.session_state.get("search_query", "daily health routines")
+    search_query = st.text_input(
+        "Semantic Search Query",
+        value=defaults,
+        placeholder="e.g. health routines, python tips, project deadline, meeting notes...",
+        label_visibility="collapsed",
+        key="search_input",
+    )
+
+    search_cols = st.columns([6, 1])
+    with search_cols[1]:
+        search_clicked = st.button("Search", key="btn_search", use_container_width=True)
+
+    q = (search_query or "").strip()
+    if search_clicked or "search_results" not in st.session_state:
+        if q:
+            with st.spinner("Performing semantic vector search..."):
+                try:
+                    from ask import semantic_search
+                    results = semantic_search(q, top_k=10)
+                    st.session_state["search_results"] = results
+                    st.session_state["search_query"] = q
+                except Exception as exc:  # noqa: BLE001
+                    st.error(f"Semantic search failed: {exc}")
+                    return
+
+    results = st.session_state.get("search_results") or []
+    query_used = st.session_state.get("search_query", "")
+
+    if query_used and results:
+        st.markdown(f"**Found {len(results)} matching notes for:** *\"{query_used}\"*")
+        for idx, res in enumerate(results):
+            score = res.get("relevance_score", 0.0)
+            score_pct = min(99, int(score * 100)) if score <= 1.0 else min(99, int(score * 35))
+            title = res.get("title") or res.get("slug") or res.get("id")
+            path = res.get("path", "")
+            para = res.get("para", "General")
+            summary = res.get("summary") or "No summary available."
+            snippet = res.get("snippet", "")
+
+            with st.expander(f"🎯 {score_pct}% Match | {title} ({para})", expanded=(idx == 0)):
+                st.markdown(f"**Path:** `{path}`")
+                st.markdown(f"**Category:** `{para}`")
+                if res.get("tags"):
+                    tags_html = " ".join([f"`#{t}`" for t in res["tags"]])
+                    st.markdown(f"**Tags:** {tags_html}")
+                st.markdown(f"**Summary:** {summary}")
+                if snippet:
+                    st.markdown(f"**Content Snippet:**\n> {snippet}")
+    elif query_used:
+        st.info("No relevant notes matched your search query.")
+
+
 # ── Main: Ask your brain ────────────────────────────────────────────────────
 
 def render_ask_section() -> None:
@@ -663,9 +722,17 @@ def render_knowledge_graph() -> None:
 
 def render_main() -> None:
     render_header()
-    render_ask_section()
-    st.markdown("<div style='height:24px'></div>", unsafe_allow_html=True)
-    render_knowledge_graph()
+    tab_search, tab_ask, tab_graph = st.tabs([
+        "🔍 Semantic Search",
+        "🤖 Ask Your Brain",
+        "🕸️ Knowledge Graph",
+    ])
+    with tab_search:
+        render_semantic_search_section()
+    with tab_ask:
+        render_ask_section()
+    with tab_graph:
+        render_knowledge_graph()
 
 
 # ── Entry point ─────────────────────────────────────────────────────────────
