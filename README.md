@@ -15,6 +15,15 @@ Experience SecondSelf live in your browser:
 **Phase 5 Complete — Deployed to Streamlit Community Cloud!**  
 The full SecondSelf web interface (`app.py`) is live. It provides interactive knowledge graph visualization, semantic search, RAG-powered question answering ("Ask your brain"), and safe public demo mode.
 
+## 🏆 Badges & Milestones
+
+| Badge | Name | Deliverable | Status |
+|---|---|---|---|
+| 📦 | **The Archivist** | One-command capture pipeline (`capture.py`) saving notes/links/files with UUID & timestamp into `raw/` | **EARNED** |
+| 📚 | **The Librarian** | Auto-classification into PARA categories (`classify.py`) & vector embedding auto-linking (`link.py`) | **EARNED** |
+| 🗺️ | **The Cartographer** | Graph data export (`build_graph.py`) & force-directed vis-network brain visualization | **EARNED** |
+| 🔮 | **The Oracle** | RAG search (`ask.py`), unified Streamlit shell (`app.py`), & public HTTPS deployment | **EARNED** |
+
 ## Repository layout
 
 ```text
