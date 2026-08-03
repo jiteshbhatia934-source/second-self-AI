@@ -24,10 +24,10 @@ data/index/
 # Generated graph export (commit a sanitized demo graph only when deploying)
 graph.json
 
-# Wiki files (ignore notes, keep obsidian config)
-wiki/*
-!wiki/.obsidian/
-!wiki/.obsidian/**
+# Wiki: track note markdown only (Obsidian config, attachments, etc.)
+wiki/**
+!wiki/**/
+!wiki/**/*.md
 
 # Local notes / downloads
 *.pdf
