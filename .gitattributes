@@ -1,0 +1,8 @@
+# Auto-detect text files and normalize line endings to LF inside git repository
+* text=auto eol=lf
+
+# Force specific binary formats to be untouched
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
