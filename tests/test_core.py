@@ -76,5 +76,41 @@ class TestStorage(unittest.TestCase):
             self.assertTrue(hasattr(first, "para"))
 
 
+class TestEdgeCases(unittest.TestCase):
+    def test_ask_01_blank_question(self):
+        result = ask.ask("")
+        self.assertIn("non-empty", result["answer"].lower())
+
+    def test_ui_01_missing_graph_json(self):
+        from graph_component import load_graph_data
+        missing_path = Path("tmp_missing_graph_test.json")
+        try:
+            data = load_graph_data(missing_path)
+            self.assertIn("nodes", data)
+            self.assertIn("edges", data)
+        finally:
+            if missing_path.exists():
+                missing_path.unlink()
+
+    def test_ask_03_direct_answer_fallback(self):
+        from lib.models import WikiNote
+        dummy_note = WikiNote(
+            id="test",
+            raw_id="raw_test",
+            slug="test",
+            para="Projects",
+            tags=[],
+            summary="Test summary",
+            body="No contact details here",
+            title="Test Title",
+            created="",
+            links=[],
+            path="test.md"
+        )
+        res = ask._build_direct_answer("linkedin profile", dummy_note, [])
+        self.assertIsNone(res)
+
+
 if __name__ == "__main__":
     unittest.main()
+
